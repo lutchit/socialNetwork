@@ -7,7 +7,7 @@ This project, in the course of Web Services during the second year of the univer
 
 ###Composants
 Back end application is realized with Node.js, in particular with the framework Express 4.
-Database is realised with NoSQL, hosted on MongoLab (https://mongolab.com/databases/dwagame), and linked with the project in db.js file.
+Database is realised with NoSQL, hosted on MongoLab (https://mlab.com/databases/webservicessocialnetwork), and linked with the project in db.js file.
 
 ###Installation
 No difficultis in the installation. Let's do it !
