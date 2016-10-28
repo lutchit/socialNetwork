@@ -1,3 +1,5 @@
+'use strict';
+
 // Bring Mongoose into the app 
 var mongoose = require('mongoose'); 
 
