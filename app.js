@@ -7,6 +7,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 var db = require('./db');
+var accountRoute = require('./routes/account');
+
 var app = express();
 
 // configuration =================
@@ -34,6 +36,7 @@ if (app.get('env') === 'development') {
 
 // Routes //
 
+app.use('/', accountRoute);
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
 
 app.get('*', function(req, res) {
