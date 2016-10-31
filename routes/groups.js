@@ -17,6 +17,17 @@ router.get('/groups/:id', function(req, res) {
     });
 });
 
+router.delete('/groups/:id', function(req, res) {
+	groups.remove(req.params.id, function(err) {
+		if(err) {
+			console.log(err.cause);
+			res.status(err.status).send(err.cause);
+		} else {
+			res.status(200).send('Group removed');
+		}
+	});
+});
+
 router.post('/groups/create', function(req, res) {
 	if(!req.body.name || !req.body.idAdmin) {
 		res.status(401).send("Required name/admin");
