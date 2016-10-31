@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 
 var db = require('./db');
 var accountRoute = require('./routes/account');
+var groupsRoute = require('./routes/groups');
 
 var app = express();
 
@@ -39,6 +40,7 @@ if (app.get('env') === 'development') {
 // Routes //
 
 app.use('/', accountRoute);
+app.use('/', groupsRoute);
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
 
 app.get('*', function(req, res) {
