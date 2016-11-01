@@ -17,6 +17,17 @@ router.get('/groups/:id', function(req, res) {
     });
 });
 
+router.get('/groups', function(req, res) {
+    groups.getAll(function(groups, err) {
+        if(err) {
+            console.log(err.cause);
+            res.status(err.status).send(err.cause);
+        } else {
+            res.status(200).json(groups);
+        }
+    });
+});
+
 router.delete('/groups/:id', function(req, res) {
 	groups.remove(req.params.id, function(err) {
 		if(err) {
