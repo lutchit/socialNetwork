@@ -4,7 +4,8 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 
-var groups = require ("../config").groups;
+var groups = require ('../config').groups;
+var users = require('../config').users;
 
 router.get('/groups/:id', function(req, res) {
     groups.get(req.params.id, function(group, err) {
@@ -41,16 +42,27 @@ router.delete('/groups/:id', function(req, res) {
 
 router.post('/groups/create', function(req, res) {
 	if(!req.body.name || !req.body.idAdmin) {
-		res.status(401).send("Required name/admin");
+		res.status(401).send('Required name/admin');
 	} else {
-		groups.create(req.body.name, req.body.description, req.body.idAdmin, function(group, err){
-			if(err) {
-				console.log(err.cause);
-				res.status(err.status).send(err.cause);
-			} else {
-                res.status(200).send('Group created');
-			}
-		});
+        users.exists(req.body.idAdmin, function(exists, err) {
+            if(err) {
+                    console.log(err.cause);
+                    res.status(err.status).send(err.cause);
+            } else {
+                if(exists) {
+                    groups.create(req.body.name, req.body.description, req.body.idAdmin, function(group, err){
+                        if(err) {
+                            console.log(err.cause);
+                            res.status(err.status).send(err.cause);
+                        } else {
+                            res.status(200).send('Group created');
+                        }
+                    });
+                } else {
+                    res.status(404).send('User not found');
+                }
+            }
+        });
 	}
 });
 
