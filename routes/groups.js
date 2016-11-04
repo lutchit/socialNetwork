@@ -76,19 +76,7 @@ router.put('/groups/join/:groupId', function(req, res) {
                     if(err2) {
                         res.status(err2.status).send(err2.cause);
                     } else {
-                        users.addMemberOf(req.body.userId, req.params.groupId, function(err3) {
-                            if(err3) {
-                                groups.removeMember(req.body.userId, req.params.groupId, function(err4) {
-                                    if(err4) {
-                                        res.status(err4.status).send(err4.cause);
-                                    } else {
-                                        res.status(400).send('Impossible to update user field : groups');
-                                    }
-                                });                
-                            } else {
-                                res.status(200).send('Group joined');
-                            }
-                        });
+                        res.status(200).send('Group joined');
                     }
                 });
             } else {
