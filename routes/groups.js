@@ -52,7 +52,6 @@ router.post('/groups/create', function(req, res) {
                 if(exists) {
                     groups.create(req.body.name, req.body.description, req.body.idAdmin, function(group, err){
                         if(err) {
-                            console.log(err.cause);
                             res.status(err.status).send(err.cause);
                         } else {
                             res.status(200).send('Group created');
@@ -64,6 +63,39 @@ router.post('/groups/create', function(req, res) {
             }
         });
 	}
+});
+
+router.put('/groups/join/:groupId', function(req, res) {
+    users.exists(req.body.userId, function(exists, err1) {
+        if(err1) {
+            console.log(err1.cause);
+            res.status(err1.status).send(err1.cause);
+        } else {
+            if(exists) {
+                groups.join(req.body.userId, req.params.groupId, function(err2) {
+                    if(err2) {
+                        res.status(err2.status).send(err2.cause);
+                    } else {
+                        users.addMemberOf(req.body.userId, req.params.groupId, function(err3) {
+                            if(err3) {
+                                groups.removeMember(req.body.userId, req.params.groupId, function(err4) {
+                                    if(err4) {
+                                        res.status(err4.status).send(err4.cause);
+                                    } else {
+                                        res.status(400).send('Impossible to update user field : groups');
+                                    }
+                                });                
+                            } else {
+                                res.status(200).send('Group joined');
+                            }
+                        });
+                    }
+                });
+            } else {
+                res.status(404).send('User not found');
+            }
+        }
+    });
 });
 
 router.get('/groups/:id/admin', function(req, res) {
@@ -78,16 +110,33 @@ router.get('/groups/:id/admin', function(req, res) {
 });
 
 router.put('/groups/:id', function(req, res) {
-    console.log(req.body.name);
-    console.log(req.body.description);
 	groups.update(req.params.id, req.body.name, req.body.description, function(user, err) {
 		if(err) {
-			console.log(err.cause);
 			res.status(err.status).send(err.cause);
 		} else {
 			res.status(200).send('Group updated');
 		}
 	});
+});
+
+router.delete('/groups/:groupId/members/:userId', function(req, res) {
+    groups.removeMember(req.params.userId, req.params.groupId, function(err) {
+        if(err) {
+            res.status(err.status).send(err.cause);
+        } else {
+            res.status(200).send('User removed');
+        }
+    });
+});
+
+router.get('/groups/users/:userId', function(req, res) {
+    groups.findGroupByMember(req.params.userId, function(groups, err) {
+        if(err) {
+            res.status(err.status).send(err.cause);
+        } else {
+            res.status(200).json(groups);
+        }
+    });
 });
 
 module.exports = router;
