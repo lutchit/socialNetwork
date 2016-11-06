@@ -4,8 +4,9 @@
   "description": "A social network web app",
   "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "DEBUG=feedback supervisor ./bin/www"
+    "start": "NODE_ENV=development node ./bin/www",
+    "dev": "NODE_ENV=development DEBUG=feedback supervisor ./bin/www",
+    "test": "NODE_ENV=test istanbul cover _mocha test/**/*.js -- -R spec"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,12 @@
     "lodash": "^4.16.4"
   },
   "jshintConfig": {
-    "node": true
+    "node": true,
+    "mocha": true
+  },
+  "devDependencies": {
+    "mocha": "^2.3.1",
+    "chai": "^3.2.0",
+    "chai-http": "^1.0.0"
   }
 }
