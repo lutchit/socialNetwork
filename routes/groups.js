@@ -117,12 +117,23 @@ router.delete('/groups/:groupId/members/:userId', function(req, res) {
     });
 });
 
-router.get('/groups/users/:userId', function(req, res) {
-    groups.findGroupByMember(req.params.userId, function(groups, err) {
-        if(err) {
-            res.status(err.status).send(err.cause);
+router.get('/groups/members/:userId', function(req, res) {
+    users.exists(req.params.userId, function(exists, err1) {
+        if(err1) {
+            console.log(err1.cause);
+            res.status(err1.status).send(err1.cause);
         } else {
-            res.status(200).json(groups);
+            if(exists) {
+                groups.findGroupByMember(req.params.userId, function(groups, err) {
+                    if(err) {
+                        res.status(err.status).send(err.cause);
+                    } else {
+                        res.status(200).json(groups);
+                    }
+                });
+            } else {
+                res.status(404).send('User not found');
+            }
         }
     });
 });
