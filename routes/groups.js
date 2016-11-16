@@ -114,7 +114,6 @@ router.delete('/groups/:groupId/members/:userId', function(req, res) {
 router.get('/groups/members/:userId', function(req, res) {
     users.exists(req.params.userId, function(exists, err1) {
         if(err1) {
-            console.log(err1.cause);
             res.status(err1.status).send(err1.cause);
         } else {
             if(exists) {
@@ -132,17 +131,16 @@ router.get('/groups/members/:userId', function(req, res) {
     });
 });
 
-router.post('/groups/comments/create', function(req, res) {
-    if(!req.body.groupId || !req.body.message || !req.body.authorId) {
+router.post('/groups/:groupId/comments/create', function(req, res) {
+    if(!req.params.groupId || !req.body.message || !req.body.authorId) {
 		res.status(401).send('Required group/message/author');
 	} else {
         users.exists(req.body.authorId, function(exists, err) {
             if(err) {
-                    console.log(err.cause);
                     res.status(err.status).send(err.cause);
             } else {
                 if(exists) {
-                    groups.addComment(req.body.groupId, req.body.message, req.body.authorId, function(group, err){
+                    groups.addComment(req.params.groupId, req.body.message, req.body.authorId, function(err){
                         if(err) {
                             res.status(err.status).send(err.cause);
                         } else {

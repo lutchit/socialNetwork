@@ -39,7 +39,18 @@ describe('Group route', function() {
             name: 'testGroup',
             description: 'test',
             admin: 'testAdminId',
-            members: ['testAdminId']
+            members: ['testAdminId'],
+            dashboard: [{
+                _id: 'idComment1',
+                author: 'testMemberId',
+                message: 'this is the first comment',
+                date: new Date().toJSON().slice(0,10)
+            }, {
+                _id: 'idComment2',
+                author: 'testAdminId',
+                message: 'this is the second comment',
+                date: new Date().toJSON().slice(0,10)
+            }]
         });
         groupToCreate.save(function(err) {
             done();
@@ -181,6 +192,104 @@ describe('Group route', function() {
         });
     });
 
+    it('should return the comments for a group on /groups/:groupId/comments GET', function(done) {
+        chai.request(server)
+        .get('/groups/testGroupId/comments')
+        .end(function(err, res){
+            res.should.have.status(200);
+            res.body.should.be.a('array');
+            res.body.should.have.length(2);
+            done();
+        });
+    });
+
+    it('should return a 404 error on /groups/:groupId/comments GET when group not exists', function(done) {
+        chai.request(server)
+        .get('/groups/falseGroupId/comments')
+        .end(function(err, res){
+            res.should.have.status(404);
+            done();
+        });
+    });
+
+    it('should return a comment for a group on /groups/:groupId/comments/:commentId GET', function(done) {
+        chai.request(server)
+        .get('/groups/testGroupId/comments/idComment1')
+        .end(function(err, res){
+            res.should.have.status(200);
+            done();
+        });
+    });
+
+    it('should return a 404 error on /groups/:groupId/comments/:commentId GET when group not exists', function(done) {
+        chai.request(server)
+        .get('/groups/falseGroupId/comments/idComment1')
+        .end(function(err, res){
+            res.should.have.status(404);
+            done();
+        });
+    });
+
+    it('should return a 404 error on /groups/:groupId/comments/:commentId GET when comment not exists', function(done) {
+        chai.request(server)
+        .get('/groups/testGroupId/comments/falseIdComment')
+        .end(function(err, res){
+            res.should.have.status(404);
+            done();
+        });
+    });
+
+    it('should add a comment on /groups/:groupId/comments/create POST', function(done) {
+        chai.request(server)
+        .post('/groups/testGroupId/comments/create')
+        .send({
+            authorId: 'testMemberId',
+            message: 'This is the third message'
+        })
+        .end(function(err, res){
+            res.should.have.status(200);
+            done();
+        });
+    });
+
+    it('should return a 404 error on /groups/:groupId/comments/create POST when group not exists', function(done) {
+        chai.request(server)
+        .post('/groups/falseGroupId/comments/create')
+        .send({
+            authorId: 'testMemberId',
+            message: 'This is the third message'
+        })
+        .end(function(err, res){
+            res.should.have.status(404);
+            done();
+        });
+    });
+
+    it('should return a 404 error on /groups/:groupId/comments/create POST when user not exists', function(done) {
+        chai.request(server)
+        .post('/groups/testGroupId/comments/create')
+        .send({
+            authorId: 'falseMemberId',
+            message: 'This is the third message'
+        })
+        .end(function(err, res){
+            res.should.have.status(404);
+            done();
+        });
+    });
+
+    it('should return a 401 error on /groups/:groupId/comments/create POST when a field is missing', function(done) {
+        chai.request(server)
+        .post('/groups/testGroupId/comments/create')
+        .send({
+            message: 'This is the third message'
+        })
+        .end(function(err, res){
+            res.should.have.status(401);
+            done();
+        });
+    });
+
     it('should delete a member group on /groups/:groupId/members/:userId DELETE', function(done) {
         chai.request(server)
         .delete('/groups/testGroupId/members/testMemberId')
@@ -208,20 +317,20 @@ describe('Group route', function() {
         });
     });
 
-    it('should delete a group on /groups/:id DELETE', function(done) {
-        chai.request(server)
-        .delete('/groups/testGroupId')
-        .end(function(err, res){
-            res.should.have.status(200);
-            done();
-        });
-    });
-
     it('should return a 404 error on /groups/:id DELETE when group not exists', function(done) {
         chai.request(server)
         .delete('/groups/falseId')
         .end(function(err, res){
             res.should.have.status(404);
+            done();
+        });
+    });
+
+    it('should delete a group on /groups/:id DELETE', function(done) {
+        chai.request(server)
+        .delete('/groups/testGroupId')
+        .end(function(err, res){
+            res.should.have.status(200);
             done();
         });
     });

@@ -33,7 +33,6 @@ router.post('/account/signup', function(req, res) {
 router.put('/account/:id', function(req, res) {
 	users.update(req.params.id, req.body.email, req.body.firstname, req.body.surname, req.body.biography, function(user, err) {
 		if(err) {
-			console.log(err.cause);
 			res.status(err.status).send(err.cause);
 		} else {
 			res.status(200).send('User updated');
@@ -44,7 +43,6 @@ router.put('/account/:id', function(req, res) {
 router.delete('/account/:id', function(req, res) {
 	users.remove(req.params.id, function(err) {
 		if(err) {
-			console.log(err.cause);
 			res.status(err.status).send(err.cause);
 		} else {
 			res.status(200).send('User removed');
