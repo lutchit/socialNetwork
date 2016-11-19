@@ -69,7 +69,6 @@ describe('Group route', function() {
         .get('/groups/testGroupId')
         .end(function(err, res){
             res.should.have.status(200);
-            res.should.be.json;
             done();
         });
     });
@@ -331,15 +330,6 @@ describe('Group route', function() {
         .delete('/groups/testGroupId')
         .end(function(err, res){
             res.should.have.status(200);
-            done();
-        });
-    });
-
-    it('should return a 404 error on /groups GET when no group', function(done) {
-        chai.request(server)
-        .get('/groups')
-        .end(function(err, res){
-            res.should.have.status(404);
             done();
         });
     });

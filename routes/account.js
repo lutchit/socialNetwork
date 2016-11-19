@@ -3,10 +3,11 @@
 var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
+var auth = require('../tools/authentification');
 
-var users = require ("../config").users;
+var users = require ('../config').users;
 
-router.get('/account/:id', function(req, res) {
+router.get('/account/:id', auth.ensureAuthorized, function(req, res) {
 	users.get(req.params.id, function(user, err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
@@ -17,10 +18,10 @@ router.get('/account/:id', function(req, res) {
 });
 
 router.post('/account/signup', function(req, res) {
-	if(!req.body.email || !req.body.firstname || !req.body.surname) {
-		res.status(401).send("Required email/firstname/surname");
+	if(!req.body.email || !req.body.password || !req.body.firstname || !req.body.surname) {
+		res.status(401).send('Required email/password/firstname/surname');
 	} else {
-		users.signup(req.body.email, req.body.firstname, req.body.surname, req.body.biography, function(user, err){
+		users.signup(req.body.email, req.body.password, req.body.firstname, req.body.surname, req.body.biography, function(user, err){
 			if(err) {
 				res.status(err.status).send(err.cause);
 			} else {
@@ -30,7 +31,21 @@ router.post('/account/signup', function(req, res) {
 	}
 });
 
-router.put('/account/:id', function(req, res) {
+router.post('/account/authenticate', function(req, res) {
+	if(!req.body.email || !req.body.password) {
+		res.status(401).send('Required email/password');
+	} else {
+		users.login(req.body.email, req.body.password, function(token, err) {
+			if(err) {
+				res.status(err.status).send(err.cause);
+			} else {
+				res.status(200).send(token);
+			}
+		});
+	}
+});
+
+router.put('/account/:id', auth.ensureAuthorized, function(req, res) {
 	users.update(req.params.id, req.body.email, req.body.firstname, req.body.surname, req.body.biography, function(user, err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
@@ -40,7 +55,7 @@ router.put('/account/:id', function(req, res) {
 	});
 });
 
-router.delete('/account/:id', function(req, res) {
+router.delete('/account/:id', auth.ensureAuthorized, function(req, res) {
 	users.remove(req.params.id, function(err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
