@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
+var auth = require('../tools/authentification');
 
 var groups = require ('../config').groups;
 var users = require('../config').users;
@@ -27,7 +28,7 @@ router.get('/groups', function(req, res) {
     });
 });
 
-router.delete('/groups/:id', function(req, res) {
+router.delete('/groups/:id', auth.ensureAuthorized, function(req, res) {
 	groups.remove(req.params.id, function(err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
@@ -37,7 +38,7 @@ router.delete('/groups/:id', function(req, res) {
 	});
 });
 
-router.post('/groups/create', function(req, res) {
+router.post('/groups/create', auth.ensureAuthorized, function(req, res) {
 	if(!req.body.name || !req.body.idAdmin) {
 		res.status(401).send('Required name/admin');
 	} else {
@@ -61,7 +62,7 @@ router.post('/groups/create', function(req, res) {
 	}
 });
 
-router.put('/groups/join/:groupId', function(req, res) {
+router.put('/groups/join/:groupId', auth.ensureAuthorized, function(req, res) {
     users.exists(req.body.userId, function(exists, err1) {
         if(err1) {
             res.status(err1.status).send(err1.cause);
@@ -81,7 +82,7 @@ router.put('/groups/join/:groupId', function(req, res) {
     });
 });
 
-router.get('/groups/:id/admin', function(req, res) {
+router.get('/groups/:id/admin', auth.ensureAuthorized, function(req, res) {
     groups.getAdmin(req.params.id, function(admin, err) {
         if(err) {
             res.status(err.status).send(err.cause);
@@ -91,7 +92,7 @@ router.get('/groups/:id/admin', function(req, res) {
     });
 });
 
-router.put('/groups/:id', function(req, res) {
+router.put('/groups/:id', auth.ensureAuthorized, function(req, res) {
 	groups.update(req.params.id, req.body.name, req.body.description, function(user, err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
@@ -101,7 +102,7 @@ router.put('/groups/:id', function(req, res) {
 	});
 });
 
-router.delete('/groups/:groupId/members/:userId', function(req, res) {
+router.delete('/groups/:groupId/members/:userId', auth.ensureAuthorized, function(req, res) {
     groups.removeMember(req.params.userId, req.params.groupId, function(err) {
         if(err) {
             res.status(err.status).send(err.cause);
@@ -111,7 +112,7 @@ router.delete('/groups/:groupId/members/:userId', function(req, res) {
     });
 });
 
-router.get('/groups/members/:userId', function(req, res) {
+router.get('/groups/members/:userId', auth.ensureAuthorized, function(req, res) {
     users.exists(req.params.userId, function(exists, err1) {
         if(err1) {
             res.status(err1.status).send(err1.cause);
@@ -131,7 +132,7 @@ router.get('/groups/members/:userId', function(req, res) {
     });
 });
 
-router.post('/groups/:groupId/comments/create', function(req, res) {
+router.post('/groups/:groupId/comments/create', auth.ensureAuthorized, function(req, res) {
     if(!req.params.groupId || !req.body.message || !req.body.authorId) {
 		res.status(401).send('Required group/message/author');
 	} else {
@@ -155,7 +156,7 @@ router.post('/groups/:groupId/comments/create', function(req, res) {
 	}
 });
 
-router.get('/groups/:groupId/comments', function(req, res) {
+router.get('/groups/:groupId/comments', auth.ensureAuthorized, function(req, res) {
     groups.getComments(req.params.groupId, function(comments, err) {
         if(err) {
             res.status(err.status).send(err.cause);
@@ -165,7 +166,7 @@ router.get('/groups/:groupId/comments', function(req, res) {
     });
 });
 
-router.get('/groups/:groupId/comments/:commentId', function(req, res) {
+router.get('/groups/:groupId/comments/:commentId', auth.ensureAuthorized, function(req, res) {
     groups.getComment(req.params.groupId, req.params.commentId, function(comment, err) {
         if(err) {
             res.status(err.status).send(err.cause);
