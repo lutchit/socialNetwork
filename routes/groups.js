@@ -4,6 +4,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 var auth = require('../tools/authentification');
+var jwt = require('jsonwebtoken');
 
 var groups = require ('../config').groups;
 var users = require('../config').users;
@@ -29,7 +30,8 @@ router.get('/groups', function(req, res) {
 });
 
 router.delete('/groups/:id', auth.ensureAuthorized, function(req, res) {
-	groups.remove(req.params.id, function(err) {
+    var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
+	groups.remove(req.params.id, user, function(err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
 		} else {
@@ -103,7 +105,8 @@ router.put('/groups/:id', auth.ensureAuthorized, function(req, res) {
 });
 
 router.delete('/groups/:groupId/members/:userId', auth.ensureAuthorized, function(req, res) {
-    groups.removeMember(req.params.userId, req.params.groupId, function(err) {
+    var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
+    groups.removeMember(req.params.userId, req.params.groupId, user, function(err) {
         if(err) {
             res.status(err.status).send(err.cause);
         } else {
