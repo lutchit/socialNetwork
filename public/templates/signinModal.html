@@ -1,0 +1,15 @@
+<div id="custom-modal">
+	<div class="overlay" id="signinModal">
+		<h2>
+			<strong>New on the site ?</strong>
+			Signin !
+		</h2>
+		<form>
+			<input type="text" ng-model="newUser.pseudo" placeholder="Pseudo"/>
+			<input type="email" ng-model="newUser.email" placeholder="Email"/>
+		    <input type="password" ng-model="newUser.password" placeholder="Password"/>
+		    <button class="btn" id="signinBtn" ng-click="signin()">Signin</button>
+		</form>
+	</div>
+	<div id="fade" ng-click="close()"></div>
+</div>

@@ -1,0 +1,11 @@
+<div id="profile">
+	<div ng-if="auth.isAuthenticated()">
+		<p>You're authentified !</p>
+	</div>
+
+	<div id="profileNC" ng-if="!auth.isAuthenticated()">
+		<h3>Create your own account to access your profile or login !</h3>
+		<p ng-click="showLoginForm()">Login</p>
+		<p ng-click="showSigninForm()">Signin</p>
+	</div>
+</div>

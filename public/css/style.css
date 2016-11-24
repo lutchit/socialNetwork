@@ -1,0 +1,523 @@
+html, body {
+	padding: 0;
+	margin: 0;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	background-color: #F8F8F8;
+}
+
+.header {
+  position: relative;
+  z-index: 85;
+}
+
+.header nav{
+	box-shadow: 0px 10px 10px 0px #656565;
+	background-color: #C0C0C0;
+	width:100%;
+}
+.header ul li:last-child {
+	border : none;
+}
+.header ul {
+	font-size: 0;
+	padding: 0;	
+	margin:0;
+}	
+
+.right {
+  float: right;
+}
+
+#coinsLi {
+  border-right: none;
+}
+
+#coinsLi:hover {
+  border-right: none;
+  background-color: #C0C0C0;
+}
+
+li {
+	padding: 10px;
+	border-right : 2px solid black; 
+	display :inline-block;
+	font-size: 1rem;
+}
+li:hover {
+	background-color: white;
+	cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  top: 25%;
+  border: 2px solid black;
+  background-color: #ffffff;
+  z-index: 100;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.overlay h2 {
+  border-bottom: 1px solid #e1e8ed;
+  font-size: 16px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  color: #66757f;
+  font-weight: 300;
+  line-height: 22px;
+}
+
+.overlay h2 strong {
+  color: black;
+}
+
+.overlay form input {
+  width: 90%;
+  font-size: 16px;
+  margin: 2px;
+}
+
+#loginModal {
+  left: 38.2%;
+  width: 300px;
+  height: 176px;
+}
+
+#signinModal {
+  left: 38.1%;
+  width: 300px;
+  height: 200px;
+}
+
+#logoutModal {
+  left: 42%;
+  width: 200px;
+  height: 160px;
+}
+
+#buyItModal {
+  left: 42%;
+  width: 200px;
+  height: 118px;
+}
+
+#fade {
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  background-color: black;
+  -moz-opacity: 0.7;
+  opacity: .70;
+  filter: alpha(opacity=70);
+  width: 100%;
+  height: 100%;
+  z-index: 90;
+}
+
+#fadeGame {
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  background-color: black;
+  -moz-opacity: 0.7;
+  opacity: .70;
+  filter: alpha(opacity=70);
+  width: 100%;
+  height: 100%;
+  z-index: 80;
+}
+
+#fadeGame > div {
+  position: relative;
+  left: 70%;
+  right: 100px;
+  margin-top: 75px;
+  font-family: 'Brush Script MT', cursive;
+  color: white;
+  font-size: 36px;
+  width: 200px;
+}
+
+#fadeGame > img {
+  width: 137px;
+  left: 42%;
+  position: relative;
+  top: -127px;
+}
+
+#homeContent {
+  text-align: center;
+  margin: 40px;
+}
+
+#profileNC {
+  width: 100%;
+  text-align: center;
+  margin-top: 100px;
+}
+
+#profile {
+  margin: 40px;
+}
+
+#abstract {
+  display: inline-block;
+  padding: 60px 200px 100px 200px;
+}
+
+.btn {
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+
+#dwnBtn {
+  font-size: 14px;
+}
+
+#playDemoBtn {
+  font-size: 14px;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+#launchGameBtn {
+  font-size: 30px;
+}
+
+#loginBtn {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+#signinBtn {
+  font-size: 14px;
+  height: 30px;
+  line-height: 11px;
+  background-image: linear-gradient(#ffcc4d,#ffac33);
+  border-color: #f1a02a;
+  color: #292f33;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  margin-top: 7px;
+}
+
+#noLogoutBtn {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+#logoutBtn {
+  font-size: 12px;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+
+#profileLeft {
+  display: inline-block;
+  width: 450px;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 4px;
+  vertical-align: middle;
+  padding-top: 10px;
+}
+
+.bodyParts {
+  cursor: pointer;
+}
+
+#head {
+  height:60px;
+  width: 60px;
+  margin : 0 auto;
+  line-height: 3.8;
+  border: 1px solid transparent;
+}
+
+#body {
+  height:140px;
+  width: 110px;
+  border: 1px solid black;
+  margin : 0 auto;
+  line-height: 3.8;
+  border: 1px solid transparent;
+}
+
+#rightArm {
+  height:30px;
+  width: 160px;
+  border: 1px solid black;
+  float: right;
+  margin-top: -70px;
+  margin-right: 7.5%;
+  transform: rotate(60deg);
+  border: 1px solid transparent;
+}
+
+#leftArm {
+  height:30px;
+  width: 160px;
+  border: 1px solid black;
+  float: right;
+  margin-top: -70px;
+  margin-right: 56.5%;
+  transform: rotate(-60deg);
+  border: 1px solid transparent;
+}
+
+#rightLeg {
+  height:180px;
+  width: 40px;
+  border: 1px solid black;
+  float: right;
+  margin-top: 0px;
+  margin-right: 40%;
+  border: 1px solid transparent;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+
+#leftLeg {
+  height:180px;
+  width: 40px;
+  border: 1px solid black;
+  float: right;
+  margin-top: -198px;
+  margin-right: 51%;
+  border: 1px solid transparent;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+
+.divItemSelection h4 {
+  border-bottom: 1px solid #e1e8ed;
+  font-size: 14px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  padding: 0px 10px;
+  font-weight: 300;
+  line-height: 22px;
+}
+
+#itemsBoxAvailable {
+  margin-left: 8px;
+  margin-right: 8px;
+  max-width: 90%;
+  height: 40px;
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 0;
+  overflow: auto;
+  text-align: center;
+}
+
+#itemsBoxAvailable > div {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#itemsBoxAvailable > div:last-child { 
+  margin-right: 0px;
+}
+
+#headItems {
+  background-color: white;
+  position: absolute;
+  z-index: 50;
+  height: 100px;
+  width: 170px;
+  border: 1px solid black;
+  margin-left: 340px; 
+  margin-top: -55px;
+  border-radius: 10px; 
+}
+
+#bodyItems {
+  background-color: white;
+  position: absolute;
+  z-index: 50;
+  height: 100px;
+  width: 170px;
+  border: 1px solid black;
+  margin-left: 294px; 
+  margin-top: -134px;
+  border-radius: 10px; 
+}
+
+#rightItems {
+  background-color: white;
+  position: absolute;
+  z-index: 50;
+  height: 100px;
+  width: 170px;
+  border: 1px solid black;
+  margin-left: 274px; 
+  margin-top: 40px;
+  border-radius: 10px;
+}
+
+#leftItems {
+  background-color: white;
+  position: absolute;
+  z-index: 50;
+  height: 100px;
+  width: 170px;
+  border: 1px solid black;
+  margin-left: 3px; 
+  margin-top: 40px;
+  border-radius: 10px; 
+}
+
+#profileRight {
+  display: inline-block;
+  width: 40%;
+  margin-left: 100px;
+  vertical-align: top;
+}
+
+#profileRight h2 {
+  border-bottom: 1px solid #e1e8ed;
+  padding: 0px 0px 10px 12px;
+  color: #66757f;
+  font-weight: 300;
+  line-height: 22px;
+}
+
+#profileRight h2 strong {
+  color: black;
+}
+
+#historiesTable {
+  width: 100%;
+  font-size: 14px;
+  border-collapse: collapse;
+}
+
+#historiesTable tr {
+  line-height: 30px;
+  position: relative;
+  border: solid;
+  border-width: 1px 0;
+}
+
+#historiesTable tr:first-child {
+  border-top: none;
+}
+#historiesTable tr:last-child {
+  border-bottom: none;
+}
+
+.coinsProfileDiv {
+  display: inline-block;
+  text-align: center;
+}
+
+#gameContent {
+  width: 100%;
+  text-align: center;
+  padding-top: 100px;
+}
+
+#game {
+  display: inline-block;
+  width: 50%;
+  vertical-align: middle;
+}
+
+#tableGame {
+  border: 3px solid black;
+  border-radius: 5px;
+  margin: 0 auto;
+  background-color: black;
+}
+
+.hideCell{
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+#time {
+  display: inline-block;
+  width: 29%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#divTime {
+  width: 30%;
+  display: block;
+  border: 3px solid black;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 30px;
+  margin: 0 auto;
+}
+
+#time > p {
+  display: block;
+  margin-top: 50px;
+}
+
+.block {
+  height:100px;
+  width: 100px;
+  cursor: pointer;
+}
+
+#shopContent {
+  width: 100%;
+}
+
+#shopContent h2 {
+  border-bottom: 1px solid #e1e8ed;
+  font-size: 20px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  font-weight: 300;
+  line-height: 22px;
+}
+
+.categoryContent {
+  margin-left: 20px;
+}
+
+.itemsContent {
+  margin-left: 50px;
+  width: 90%;
+  height: 60px;
+  display: block;
+  white-space: nowrap;
+  font-size: 0;
+  overflow: auto;
+  text-align: center;
+}
+
+.itemsContent > div {
+  display: inline-block;
+  width: 100px;
+  height: 50px;
+  margin-right: 100px;
+  font-size: 16px;
+}
+
+.itemsContent > div:last-child { 
+  margin-right: 0px;
+}
+
+.itemsContent > div > div {
+  padding: 20px 0px 20px 0px;
+}
+
+.blockedItem {
+  cursor: pointer;
+}

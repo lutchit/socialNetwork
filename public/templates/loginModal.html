@@ -1,0 +1,14 @@
+<div id="custom-modal">
+	<div class="overlay" id="loginModal">
+		<h2>
+			<strong>Already registered ?</strong>
+			Login !
+		</h2>
+		<form>
+			<input type="email" ng-model="loginForm.email" placeholder="Email" />
+		    <input type="password" ng-model="loginForm.password" placeholder="Password" />
+		    <button ng-click="login()" class="btn" id="loginBtn">Login</button>
+		</form>
+	</div>
+	<div id="fade" ng-click="close()"></div>
+</div>
