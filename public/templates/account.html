@@ -1,6 +1,15 @@
 <div id="profile">
 	<div ng-if="auth.isAuthenticated()">
-		<p>You're authentified !</p>
+		<div>
+			<h3>Your account</h3>
+			<p>Name : {{user.firstname}} {{user.lastname}}</p>
+			<p>Email : {{user.email}}</p>
+			<p ng-if="user.biography">Biography : {{ user.biography }}</p>
+			<p ng-if="!user.biography" style="">Biography : <i>Add your biography</i></p>
+			<p>You're a member from {{showDate(user.registrationDate, 12)}}</p>
+			<p></p>
+		</div>
+		<div></div>
 	</div>
 
 	<div id="profileNC" ng-if="!auth.isAuthenticated()">

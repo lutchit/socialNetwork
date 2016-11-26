@@ -63,6 +63,8 @@ webServicesProject.factory('Authentification', function($q, $http, $window){
         login: login,
         register: register,
         logout: logout,
-        isAuthenticated: function() { return isAuthenticated; }
+        isAuthenticated: function() { 
+            return isAuthenticated;
+        }
     };
 });

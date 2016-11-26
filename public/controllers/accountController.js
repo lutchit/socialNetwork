@@ -1,7 +1,9 @@
-webServicesProject.controller('AccountController', function($scope, $http, Authentification, Users, ModalService) {
+webServicesProject.controller('AccountController', function($scope, $http, $sce, Authentification, Users, ModalService) {
     $scope.profile = Users;
     $scope.auth = Authentification;
     $scope.close = close;
+    $scope.HTML = '<b>Hello</b>';
+    $scope.trust = $sce.trustAsHtml;
 
     if(Authentification.isAuthenticated()) {
         Users.account(function(result) {
@@ -9,6 +11,10 @@ webServicesProject.controller('AccountController', function($scope, $http, Authe
         }, function(error) {
             console.log('Cannot get the user account');
         });
+    }
+
+    $scope.showDate = function(date, numberToRemove) {
+        return new Date(date).toUTCString().slice(0, new Date(date).toUTCString().length - numberToRemove);
     }
 
     $scope.showSigninForm = function() {
