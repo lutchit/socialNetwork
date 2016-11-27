@@ -2,14 +2,25 @@
 	<div ng-if="auth.isAuthenticated()">
 		<div>
 			<h3>Your account</h3>
-			<p>Name : {{user.firstname}} {{user.lastname}}</p>
-			<p>Email : {{user.email}}</p>
-			<p ng-if="user.biography">Biography : {{ user.biography }}</p>
-			<p ng-if="!user.biography" style="">Biography : <i>Add your biography</i></p>
+			<button class="btn" style="margin-top: 10px;" ng-click="startUpdate()" ng-show="!isUpdating">Modify</button>
+			<button class="btn" style="margin-top: 10px;" ng-click="saveUpdate()" ng-show="isUpdating">Save</button>
+			<p ng-show="!isUpdating">Name : {{user.firstname}} {{user.lastname}}</p>
+			<p ng-show="isUpdating">Firstname : <input type="text" ng-model="newUser.firstname"/> Lastname : <input type="text" ng-model="newUser.lastname"/></p>
+			<p ng-show="!isUpdating">Email : {{user.email}}</p>
+			<p ng-show="isUpdating">Email : <input type="email" ng-model="newUser.email"/></p>
+			<p ng-if="user.biography" ng-show="!isUpdating">Biography : {{ user.biography }}</p>
+			<p ng-if="!user.biography" ng-show="!isUpdating">Biography : <i style="opacity: 0.5;">Add your biography</i></p>
 			<p>You're a member from {{showDate(user.registrationDate, 12)}}</p>
-			<p></p>
 		</div>
-		<div></div>
+		<div>
+			<h3>Group you joined</h3>
+			<div ng-repeat="group in groups">
+				<p><b>{{group.name}}</b></p>
+				<p>{{group.description}}</p>
+				<p>There are {{group.members.length}} members</p>
+				<p ng-if="group.admin === user._id">You're the admin</p>
+			</div>
+		</div>
 	</div>
 
 	<div id="profileNC" ng-if="!auth.isAuthenticated()">

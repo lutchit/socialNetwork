@@ -1,21 +1,38 @@
-webServicesProject.controller('AccountController', function($scope, $http, $sce, Authentification, Users, ModalService) {
-    $scope.profile = Users;
+webServicesProject.controller('AccountController', function($scope, $http, Authentification, Users, Groups, ModalService) {
     $scope.auth = Authentification;
     $scope.close = close;
-    $scope.HTML = '<b>Hello</b>';
-    $scope.trust = $sce.trustAsHtml;
+    $scope.isUpdating = false;
+    $scope.newUser = {};
 
     if(Authentification.isAuthenticated()) {
         Users.account(function(result) {
             $scope.user = result.data;
+            $scope.newUser = $scope.user;
+            Groups.memberOf($scope.user._id, function(res) {
+                $scope.groups = res.data;
+            }, function(err) {
+                console.log('Cannot get the groups an user is a member of');
+            });
         }, function(error) {
             console.log('Cannot get the user account');
         });
     }
 
+    $scope.startUpdate = function() {
+        $scope.isUpdating = true;
+    };
+
+    $scope.saveUpdate = function() {
+        Users.modify($scope.newUser, function(result) {
+            $scope.isUpdating = false;
+        }, function(err) {
+            console.log('Cannot update the user');
+        });
+    };
+
     $scope.showDate = function(date, numberToRemove) {
         return new Date(date).toUTCString().slice(0, new Date(date).toUTCString().length - numberToRemove);
-    }
+    };
 
     $scope.showSigninForm = function() {
         ModalService.showModal({
