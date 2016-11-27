@@ -50,6 +50,17 @@ webServicesProject.factory('Authentification', function($q, $http, $window){
                 reject(result.data);
             }
         });
+    };  
+
+    var remove = function(user, resolve, reject) {
+        $http.delete('/account/' + user._id).then(function(result) {
+            if (result.data) {
+                destroyUserCredentials();
+                resolve();
+            } else {
+                reject(result.data);
+            }
+        });
     };
     
     var logout = function(resolve) {

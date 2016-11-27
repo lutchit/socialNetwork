@@ -30,6 +30,14 @@ webServicesProject.controller('AccountController', function($scope, $http, Authe
         });
     };
 
+    $scope.removeAccount = function() {
+        Users.remove($scope.user, function() {
+            $scope.user = {};
+        }, function(err) {
+            console.log('Cannot remove the user');
+        });
+    };
+
     $scope.showDate = function(date, numberToRemove) {
         return new Date(date).toUTCString().slice(0, new Date(date).toUTCString().length - numberToRemove);
     };

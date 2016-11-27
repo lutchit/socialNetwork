@@ -10,6 +10,7 @@
 			<p ng-show="isUpdating">Email : <input type="email" ng-model="newUser.email"/></p>
 			<p ng-if="user.biography" ng-show="!isUpdating">Biography : {{ user.biography }}</p>
 			<p ng-if="!user.biography" ng-show="!isUpdating">Biography : <i style="opacity: 0.5;">Add your biography</i></p>
+			<p ng-show="isUpdating">Biography : <textarea type="text" ng-model="newUser.biography"></textarea></p>
 			<p>You're a member from {{showDate(user.registrationDate, 12)}}</p>
 		</div>
 		<div>
