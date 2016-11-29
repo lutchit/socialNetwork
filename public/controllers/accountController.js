@@ -30,8 +30,8 @@ webServicesProject.controller('AccountController', function($scope, $http, Authe
         });
     };
 
-    $scope.removeAccount = function() {
-        Users.remove($scope.user, function() {
+    $scope.deleteAccount = function() {
+        Authentification.remove($scope.user, function() {
             $scope.user = {};
         }, function(err) {
             console.log('Cannot remove the user');

@@ -77,21 +77,21 @@ describe('Account route', function() {
         });
     });
 
-    it('should return a 403 error on /account/:id GET when token is not true', function(done) {
+    it('should return a 401 error on /account/:id GET when token is not true', function(done) {
         chai.request(server)
         .get('/account/testId')
         .set('x-access-token', 'token')
         .end(function(err, res){
-            res.should.have.status(403);
+            res.should.have.status(401);
             done();
         });
     });
 
-    it('should return a 403 error on /account/:id GET when token is missing', function(done) {
+    it('should return a 401 error on /account/:id GET when token is missing', function(done) {
         chai.request(server)
         .get('/account/testId')
         .end(function(err, res){
-            res.should.have.status(403);
+            res.should.have.status(401);
             done();
         });
     });

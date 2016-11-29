@@ -53,7 +53,7 @@ webServicesProject.factory('Authentification', function($q, $http, $window){
     };  
 
     var remove = function(user, resolve, reject) {
-        $http.delete('/account/' + user._id).then(function(result) {
+        $http.delete('/account/' + user._id, user).then(function(result) {
             if (result.data) {
                 destroyUserCredentials();
                 resolve();
@@ -76,6 +76,7 @@ webServicesProject.factory('Authentification', function($q, $http, $window){
         logout: logout,
         isAuthenticated: function() { 
             return isAuthenticated;
-        }
+        },
+        remove: remove
     };
 });

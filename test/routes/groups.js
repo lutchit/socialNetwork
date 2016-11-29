@@ -258,7 +258,7 @@ describe('Group route', function() {
     it('should return the comments for a group on /groups/:groupId/comments GET', function(done) {
         chai.request(server)
         .get('/groups/testGroupId/comments')
-        .set('x-access-token', memberToken)
+        .set('x-access-token', memberToken) 
         .end(function(err, res){
             res.should.have.status(200);
             res.body.should.be.a('array');
@@ -277,12 +277,32 @@ describe('Group route', function() {
         });
     });
 
+    it('should return a 403 error on /groups/:groupId/comments GET when user is not in the group', function(done) {
+        chai.request(server)
+        .get('/groups/testGroupId/comments')
+        .set('x-access-token', member2Token)
+        .end(function(err, res){
+            res.should.have.status(403);
+            done();
+        });
+    });
+
     it('should return a comment for a group on /groups/:groupId/comments/:commentId GET', function(done) {
         chai.request(server)
         .get('/groups/testGroupId/comments/idComment1')
         .set('x-access-token', memberToken)
         .end(function(err, res){
             res.should.have.status(200);
+            done();
+        });
+    });
+
+    it('should return a 403 error on /groups/:groupId/comments GET when user is not in the group', function(done) {
+        chai.request(server)
+        .get('/groups/testGroupId/comments')
+        .set('x-access-token', member2Token)
+        .end(function(err, res){
+            res.should.have.status(403);
             done();
         });
     });
@@ -331,6 +351,20 @@ describe('Group route', function() {
         })
         .end(function(err, res){
             res.should.have.status(404);
+            done();
+        });
+    });
+
+    it('should return a 403 error on /groups/:groupId/comments/create POST when user doesn\'t have the rights', function(done) {
+        chai.request(server)
+        .post('/groups/testGroupId/comments/create')
+        .set('x-access-token', member2Token)
+        .send({
+            authorId: 'testMemberId',
+            message: 'This is the third message'
+        })
+        .end(function(err, res){
+            res.should.have.status(403);
             done();
         });
     });

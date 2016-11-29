@@ -65,12 +65,13 @@ router.post('/groups/create', auth.ensureAuthorized, function(req, res) {
 });
 
 router.put('/groups/join/:groupId', auth.ensureAuthorized, function(req, res) {
+    var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
     users.exists(req.body.userId, function(exists, err1) {
         if(err1) {
             res.status(err1.status).send(err1.cause);
         } else {
             if(exists) {
-                groups.join(req.body.userId, req.params.groupId, function(err2) {
+                groups.join(req.body.userId, req.params.groupId, user, function(err2) {
                     if(err2) {
                         res.status(err2.status).send(err2.cause);
                     } else {
@@ -95,7 +96,8 @@ router.get('/groups/:id/admin', auth.ensureAuthorized, function(req, res) {
 });
 
 router.put('/groups/:id', auth.ensureAuthorized, function(req, res) {
-	groups.update(req.params.id, req.body.name, req.body.description, function(user, err) {
+    var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
+	groups.update(req.params.id, req.body.name, req.body.description, user, function(user, err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
 		} else {
@@ -136,6 +138,7 @@ router.get('/groups/members/:userId', auth.ensureAuthorized, function(req, res) 
 });
 
 router.post('/groups/:groupId/comments/create', auth.ensureAuthorized, function(req, res) {
+    var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
     if(!req.params.groupId || !req.body.message || !req.body.authorId) {
 		res.status(401).send('Required group/message/author');
 	} else {
@@ -144,7 +147,7 @@ router.post('/groups/:groupId/comments/create', auth.ensureAuthorized, function(
                     res.status(err.status).send(err.cause);
             } else {
                 if(exists) {
-                    groups.addComment(req.params.groupId, req.body.message, req.body.authorId, function(err){
+                    groups.addComment(req.params.groupId, req.body.message, req.body.authorId, user, function(err){
                         if(err) {
                             res.status(err.status).send(err.cause);
                         } else {
@@ -160,23 +163,46 @@ router.post('/groups/:groupId/comments/create', auth.ensureAuthorized, function(
 });
 
 router.get('/groups/:groupId/comments', auth.ensureAuthorized, function(req, res) {
-    groups.getComments(req.params.groupId, function(comments, err) {
+    var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
+    groups.isMemberOf(req.params.groupId, user._id, function(result, err) {
         if(err) {
             res.status(err.status).send(err.cause);
         } else {
-            res.status(200).json(comments);
+            if(result) {
+                groups.getComments(req.params.groupId, function(comments, err) {
+                    if(err) {
+                        res.status(err.status).send(err.cause);
+                    } else {
+                        res.status(200).json(comments);
+                    }
+                });
+            } else {
+                res.status(403).send('You don\'t have the right to do that');
+            }
         }
     });
 });
 
 router.get('/groups/:groupId/comments/:commentId', auth.ensureAuthorized, function(req, res) {
-    groups.getComment(req.params.groupId, req.params.commentId, function(comment, err) {
+    var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
+    groups.isMemberOf(req.params.groupId, user._id, function(result, err) {
         if(err) {
             res.status(err.status).send(err.cause);
         } else {
-            res.status(200).json(comment);
+            if(result) {
+                groups.getComment(req.params.groupId, req.params.commentId, function(comment, err) {
+                    if(err) {
+                        res.status(err.status).send(err.cause);
+                    } else {
+                        res.status(200).json(comment);
+                    }
+                });
+            } else {
+                res.status(403).send('You don\'t have the right to do that');
+            }
         }
     });
+    
 });
 
 module.exports = router;
