@@ -1,8 +1,38 @@
-webServicesProject.controller('AccountController', function($scope, $http, Authentification, Users, Groups, ModalService) {
+webServicesProject.controller('AccountController', function($scope, $http, $routeParams, Authentification, Users, Groups, ModalService) {
     $scope.auth = Authentification;
     $scope.close = close;
     $scope.isUpdating = false;
     $scope.newUser = {};
+
+    if($routeParams.userId === 'me') {
+        $scope.isMe = true;
+        // $scope.user = {
+        //     "_id": "SkwPjJCWe",
+        //     "email": "ludovictichit3@gmail.com",
+        //     "password": "$2a$10$ktzplgcGQAobRt5XqwPkZuHFYrop.8b6LrYqYcnSZG.X.dJ8ZvY9m",
+        //     "firstname": "ludovic",
+        //     "lastname": "tichit",
+        //     "registrationDate": "2016-11-19T00:00:00.000Z",
+        //     "biography": "",
+        //     "__v": 0
+        // };
+    } else {
+        // $scope.otherUser = {
+        //     "_id": "test",
+        //     "email": "corentintichit@gmail.com",
+        //     "firstname": "corentin",
+        //     "lastname": "tichit",
+        //     "registrationDate": "2016-11-25T00:00:00.000Z",
+        //     "biography": "he salut",
+        //     "__v": 0
+        // };
+        $scope.isMe = false;
+        Users.get(function(user) {
+            $scope.otherUser = user;
+        }, function(err) {
+            console.log('Cannot get the user :' + $routeParams.userId);
+        });
+    }
 
     if(Authentification.isAuthenticated()) {
         Users.account(function(result) {

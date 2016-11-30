@@ -3,7 +3,7 @@
 		<ul class="right">
 			<li ng-if="!auth.isAuthenticated()" ng-click="showLoginForm()">Login</li>
 			<li ng-if="!auth.isAuthenticated()" ng-click="showSigninForm()">Signin</li>
-			<li ng-if="auth.isAuthenticated()" onclick="location.href = '/profile'">Welcome {{user.firstname}}</li>
+			<li ng-if="auth.isAuthenticated()" onclick="location.href = '/profile/me'">Welcome {{user.firstname}}</li>
 			<li ng-if="auth.isAuthenticated()" ng-click="showLogout()">Logout</li>
 		</ul>
 		<ul>

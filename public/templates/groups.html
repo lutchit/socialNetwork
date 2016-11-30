@@ -1,0 +1,9 @@
+<div ng-if="auth.isAuthenticated()">
+
+</div>
+
+<div id="profileNC" ng-if="!auth.isAuthenticated()">
+    <h3>Create your own account or login to access to groups !</h3>
+    <p ng-click="showLoginForm()">Login</p>
+    <p ng-click="showSigninForm()">Signin</p>
+</div>

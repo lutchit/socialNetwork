@@ -5,9 +5,17 @@ webServicesProject.config(['$routeProvider', '$locationProvider', function($rout
     .when('/', {
         templateUrl: 'templates/home.html'       
     })  
-    .when('/profile', {
+    .when('/profile/:userId', {
         templateUrl: 'templates/account.html',
         controller: 'AccountController'        
+    })  
+    .when('/community', {
+        templateUrl: 'templates/groups.html',
+        controller: 'GroupController'        
+    })
+    .when('/community/:groupId', {
+        templateUrl: 'templates/groupDetail.html',
+        controller: 'GroupController'        
     })
     .otherwise({ redirectTo: '/' });
 
