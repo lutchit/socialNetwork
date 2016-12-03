@@ -3,6 +3,7 @@ webServicesProject.controller('GroupController', function($scope, $http, $routeP
     $scope.isMemberOf = false;
     $scope.group = {};
     $scope.groups = [];
+    $scope.interestingGroups = [];
 
     if(Authentification.isAuthenticated()) {
         
@@ -13,6 +14,7 @@ webServicesProject.controller('GroupController', function($scope, $http, $routeP
             Users.account(function(res) {
                 Groups.join(groupId, res.data._id, function(res) {
                     $scope.isMemberOf = true;
+                    _.remove($scope.interestingGroups, { _id : groupId});
                 }, function(err) {
                     console.log('Cannot add user to the group');
                 });
@@ -37,6 +39,7 @@ webServicesProject.controller('GroupController', function($scope, $http, $routeP
                 Groups.getAll(function(groups) {
                     Groups.memberOf(user.data._id, function(res) {
                         $scope.interestingGroups = _.differenceWith(groups.data, res.data, _.isEqual);
+                        console.log($scope.interestingGroups.length);
                     }, function(err) {
                         console.log('Cannot get the groups an user is a member of');
                     });

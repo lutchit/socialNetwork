@@ -8,15 +8,14 @@
 				<button class="btn" style="margin-top: 10px;" ng-click="deleteAccount()" ng-show="isUpdating">Delete your account</button>
 				<p ng-show="!isUpdating">Name : {{user.firstname}} {{user.lastname}}</p>
 				<p ng-show="isUpdating">Firstname : <input type="text" ng-model="newUser.firstname"/> Lastname : <input type="text" ng-model="newUser.lastname"/></p>
-				<p ng-show="!isUpdating">Email : {{user.email}}</p>
-				<p ng-show="isUpdating">Email : <input type="email" ng-model="newUser.email"/></p>
+				<p>Email : {{user.email}}</p>
 				<p ng-if="user.biography" ng-show="!isUpdating">Biography : {{ user.biography }}</p>
 				<p ng-if="!user.biography" ng-show="!isUpdating">Biography : <i style="opacity: 0.5;">Add your biography</i></p>
 				<p ng-show="isUpdating">Biography : <textarea type="text" ng-model="newUser.biography"></textarea></p>
 				<p>You're a member from {{showDate(user.registrationDate, 12)}}</p>
 			</div>
 			<div>
-				<h3>Group you joined</h3>
+				<h3 ng-if="groups.length > 0">Group you joined</h3>
 				<div ng-repeat="group in groups">
 					<p style="cursor: pointer;"><b><a ng-href="/community/{{group._id}}">{{group.name}}</a></b></p>
 					<p>{{group.description}}</p>
