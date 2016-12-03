@@ -9,7 +9,7 @@ var jwt = require('jsonwebtoken');
 var groups = require ('../config').groups;
 var users = require('../config').users;
 
-router.get('/groups/:id', function(req, res) {
+router.get('/api/groups/:id', function(req, res) {
     groups.get(req.params.id, function(group, err) {
         if(err) {
             res.status(err.status).send(err.cause);
@@ -19,7 +19,7 @@ router.get('/groups/:id', function(req, res) {
     });
 });
 
-router.get('/groups', function(req, res) {
+router.get('/api/groups', function(req, res) {
     groups.getAll(function(groups, err) {
         if(err) {
             res.status(err.status).send(err.cause);
@@ -29,7 +29,7 @@ router.get('/groups', function(req, res) {
     });
 });
 
-router.delete('/groups/:id', auth.ensureAuthorized, function(req, res) {
+router.delete('/api/groups/:id', auth.ensureAuthorized, function(req, res) {
     var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
 	groups.remove(req.params.id, user, function(err) {
 		if(err) {
@@ -40,7 +40,7 @@ router.delete('/groups/:id', auth.ensureAuthorized, function(req, res) {
 	});
 });
 
-router.post('/groups/create', auth.ensureAuthorized, function(req, res) {
+router.post('/api/groups/create', auth.ensureAuthorized, function(req, res) {
 	if(!req.body.name || !req.body.idAdmin) {
 		res.status(401).send('Required name/admin');
 	} else {
@@ -64,7 +64,7 @@ router.post('/groups/create', auth.ensureAuthorized, function(req, res) {
 	}
 });
 
-router.put('/groups/join/:groupId', auth.ensureAuthorized, function(req, res) {
+router.put('/api/groups/join/:groupId', auth.ensureAuthorized, function(req, res) {
     var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
     users.exists(req.body.userId, function(exists, err1) {
         if(err1) {
@@ -85,7 +85,7 @@ router.put('/groups/join/:groupId', auth.ensureAuthorized, function(req, res) {
     });
 });
 
-router.get('/groups/:id/admin', auth.ensureAuthorized, function(req, res) {
+router.get('/api/groups/:id/admin', auth.ensureAuthorized, function(req, res) {
     groups.getAdmin(req.params.id, function(admin, err) {
         if(err) {
             res.status(err.status).send(err.cause);
@@ -95,7 +95,7 @@ router.get('/groups/:id/admin', auth.ensureAuthorized, function(req, res) {
     });
 });
 
-router.put('/groups/:id', auth.ensureAuthorized, function(req, res) {
+router.put('/api/groups/:id', auth.ensureAuthorized, function(req, res) {
     var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
 	groups.update(req.params.id, req.body.name, req.body.description, user, function(group, err) {
 		if(err) {
@@ -106,7 +106,7 @@ router.put('/groups/:id', auth.ensureAuthorized, function(req, res) {
 	});
 });
 
-router.delete('/groups/:groupId/members/:userId', auth.ensureAuthorized, function(req, res) {
+router.delete('/api/groups/:groupId/members/:userId', auth.ensureAuthorized, function(req, res) {
     var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
     groups.removeMember(req.params.userId, req.params.groupId, user, function(err) {
         if(err) {
@@ -117,7 +117,7 @@ router.delete('/groups/:groupId/members/:userId', auth.ensureAuthorized, functio
     });
 });
 
-router.get('/groups/members/:userId', auth.ensureAuthorized, function(req, res) {
+router.get('/api/groups/members/:userId', auth.ensureAuthorized, function(req, res) {
     users.exists(req.params.userId, function(exists, err1) {
         if(err1) {
             res.status(err1.status).send(err1.cause);
@@ -137,7 +137,7 @@ router.get('/groups/members/:userId', auth.ensureAuthorized, function(req, res) 
     });
 });
 
-router.post('/groups/:groupId/comments/create', auth.ensureAuthorized, function(req, res) {
+router.post('/api/groups/:groupId/comments/create', auth.ensureAuthorized, function(req, res) {
     var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
     if(!req.params.groupId || !req.body.message || !req.body.authorId) {
 		res.status(401).send('Required group/message/author');
@@ -162,7 +162,7 @@ router.post('/groups/:groupId/comments/create', auth.ensureAuthorized, function(
 	}
 });
 
-router.get('/groups/:groupId/comments', auth.ensureAuthorized, function(req, res) {
+router.get('/api/groups/:groupId/comments', auth.ensureAuthorized, function(req, res) {
     var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
     groups.isMemberOf(req.params.groupId, user._id, function(result, err) {
         if(err) {
@@ -183,7 +183,7 @@ router.get('/groups/:groupId/comments', auth.ensureAuthorized, function(req, res
     });
 });
 
-router.get('/groups/:groupId/comments/:commentId', auth.ensureAuthorized, function(req, res) {
+router.get('/api/groups/:groupId/comments/:commentId', auth.ensureAuthorized, function(req, res) {
     var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
     groups.isMemberOf(req.params.groupId, user._id, function(result, err) {
         if(err) {

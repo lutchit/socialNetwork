@@ -9,11 +9,11 @@ webServicesProject.config(['$routeProvider', '$locationProvider', function($rout
         templateUrl: 'templates/account.html',
         controller: 'AccountController'        
     })  
-    .when('/community', {
+    .when('/groups', {
         templateUrl: 'templates/groups.html',
         controller: 'GroupController'        
     })
-    .when('/community/:groupId', {
+    .when('/groups/:groupId', {
         templateUrl: 'templates/groupDetail.html',
         controller: 'GroupController'        
     })

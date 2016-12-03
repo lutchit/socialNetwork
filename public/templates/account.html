@@ -17,7 +17,7 @@
 			<div>
 				<h3 ng-if="groups.length > 0">Group you joined</h3>
 				<div ng-repeat="group in groups">
-					<p style="cursor: pointer;"><b><a ng-href="/community/{{group._id}}">{{group.name}}</a></b></p>
+					<p style="cursor: pointer;"><b><a ng-href="/groups/{{group._id}}">{{group.name}}</a></b></p>
 					<p>{{group.description}}</p>
 					<p>There are {{group.members.length}} members</p>
 					<p ng-if="group.admin === user._id">You're the admin</p>

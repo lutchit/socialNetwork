@@ -38,9 +38,9 @@ describe('Account route', function() {
         done();
     });
 
-    it('should return a 401 error on /account/authenticate POST when password is missing', function(done) {
+    it('should return a 401 error on /api/account/authenticate POST when password is missing', function(done) {
         chai.request(server)
-        .post('/account/authenticate')
+        .post('/api/account/authenticate')
         .send({
             'email': 'test@test.fr'
         })
@@ -50,9 +50,9 @@ describe('Account route', function() {
         });
     });
 
-    it('should return a 401 error on /account/authenticate POST when password is incorrect', function(done) {
+    it('should return a 401 error on /api/account/authenticate POST when password is incorrect', function(done) {
         chai.request(server)
-        .post('/account/authenticate')
+        .post('/api/account/authenticate')
         .send({
             'email': 'test@test.fr',
             'password': 'falsePassword'
@@ -63,23 +63,23 @@ describe('Account route', function() {
         });
     });
 
-    it('should return a token on /account/authenticate POST', function(done) {
+    it('should return a token on /api/account/authenticate POST', function(done) {
         chai.request(server)
-        .post('/account/authenticate')
+        .post('/api/account/authenticate')
         .send({
             'email': 'test@test.fr',
             'password': 'password'
         })
         .end(function(err, res){
             res.should.have.status(200);
-            token = res.text;
+            token = res.body.token;
             done();
         });
     });
 
-    it('should return a 401 error on /account/:id GET when token is not true', function(done) {
+    it('should return a 401 error on /api/account/:id GET when token is not true', function(done) {
         chai.request(server)
-        .get('/account/testId')
+        .get('/api/account/testId')
         .set('x-access-token', 'token')
         .end(function(err, res){
             res.should.have.status(401);
@@ -87,18 +87,18 @@ describe('Account route', function() {
         });
     });
 
-    it('should return a 401 error on /account/:id GET when token is missing', function(done) {
+    it('should return a 401 error on /api/account/:id GET when token is missing', function(done) {
         chai.request(server)
-        .get('/account/testId')
+        .get('/api/account/testId')
         .end(function(err, res){
             res.should.have.status(401);
             done();
         });
     });
 
-    it('should return a single user on /account/:id GET', function(done) {
+    it('should return a single user on /api/account/:id GET', function(done) {
         chai.request(server)
-        .get('/account/testId')
+        .get('/api/account/testId')
         .set('x-access-token', token)
         .end(function(err, res){
             res.should.have.status(200);
@@ -106,9 +106,9 @@ describe('Account route', function() {
         });
     });
 
-    it('should return a 404 error on /account/:id GET when user not exists', function(done) {
+    it('should return a 404 error on /api/account/:id GET when user not exists', function(done) {
         chai.request(server)
-        .get('/account/falseId')
+        .get('/api/account/falseId')
         .set('x-access-token', token)
         .end(function(err, res){
             res.should.have.status(404);
@@ -116,9 +116,9 @@ describe('Account route', function() {
         });
     });
 
-    it('should add an user on /account/signup POST', function(done) {
+    it('should add an user on /api/account/signup POST', function(done) {
         chai.request(server)
-        .post('/account/signup')
+        .post('/api/account/signup')
         .send({
             'email': 'test2@test.fr',
             'password': 'password',
@@ -131,9 +131,9 @@ describe('Account route', function() {
         });
     });
 
-    it('should return a 401 error when adding an user without email on /account/signup POST', function(done) {
+    it('should return a 401 error when adding an user without email on /api/account/signup POST', function(done) {
         chai.request(server)
-        .post('/account/signup')
+        .post('/api/account/signup')
         .send({
             'password': 'password',
             'firstname': 'test2',
@@ -145,9 +145,9 @@ describe('Account route', function() {
         });
     });
 
-    it('should return a 409 error when adding an existing user on /account/signup POST', function(done) {
+    it('should return a 409 error when adding an existing user on /api/account/signup POST', function(done) {
         chai.request(server)
-        .post('/account/signup')
+        .post('/api/account/signup')
         .send({
             'email': 'test2@test.fr',
             'password': 'password',
@@ -160,9 +160,9 @@ describe('Account route', function() {
         });
     });
 
-    it('should modify an user on /account/:id PUT', function(done) {
+    it('should modify an user on /api/account/:id PUT', function(done) {
         chai.request(server)
-        .put('/account/testId')
+        .put('/api/account/testId')
         .set('x-access-token', token)
         .send({
             'email': 'newMail@test.fr',
@@ -176,9 +176,9 @@ describe('Account route', function() {
         });
     });
 
-    it('should return a 404 error on /account/:id PUT when user not exists', function(done) {
+    it('should return a 404 error on /api/account/:id PUT when user not exists', function(done) {
         chai.request(server)
-        .put('/account/falseId')
+        .put('/api/account/falseId')
         .set('x-access-token', token)
         .send({
             'email': 'newMail@test.fr',
@@ -191,9 +191,9 @@ describe('Account route', function() {
         });
     });
 
-    it('should delete an user on /account/:id DELETE', function(done) {
+    it('should delete an user on /api/account/:id DELETE', function(done) {
         chai.request(server)
-        .delete('/account/testId')
+        .delete('/api/account/testId')
         .set('x-access-token', token)
         .end(function(err, res){
             res.should.have.status(204);
@@ -201,9 +201,9 @@ describe('Account route', function() {
         });
     });
 
-    it('should return a 404 error on /account/:id DELETE when user not exists', function(done) {
+    it('should return a 404 error on /api/account/:id DELETE when user not exists', function(done) {
         chai.request(server)
-        .delete('/account/falseId')
+        .delete('/api/account/falseId')
         .set('x-access-token', token)
         .end(function(err, res){
             res.should.have.status(404);

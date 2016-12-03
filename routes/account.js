@@ -8,7 +8,7 @@ var auth = require('../tools/authentification');
 
 var users = require ('../config').users;
 
-router.get('/account/me', auth.ensureAuthorized, function(req, res) {
+router.get('/api/account/me', auth.ensureAuthorized, function(req, res) {
 	var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
 	users.get(user._id, function(user, err) {
 		if(err) {
@@ -19,7 +19,7 @@ router.get('/account/me', auth.ensureAuthorized, function(req, res) {
 	});
 });
 
-router.get('/account/:id', auth.ensureAuthorized, function(req, res) {
+router.get('/api/account/:id', auth.ensureAuthorized, function(req, res) {
 	users.get(req.params.id, function(user, err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
@@ -29,7 +29,7 @@ router.get('/account/:id', auth.ensureAuthorized, function(req, res) {
 	});
 });
 
-router.post('/account/signup', function(req, res) {
+router.post('/api/account/signup', function(req, res) {
 	if(!req.body.email || !req.body.password || !req.body.firstname || !req.body.lastname) {
 		res.status(401).send('Required email/password/firstname/lastname');
 	} else {
@@ -43,7 +43,7 @@ router.post('/account/signup', function(req, res) {
 	}
 });
 
-router.post('/account/authenticate', function(req, res) {
+router.post('/api/account/authenticate', function(req, res) {
 	if(!req.body.email || !req.body.password) {
 		res.status(401).send('Required email/password');
 	} else {
@@ -57,7 +57,7 @@ router.post('/account/authenticate', function(req, res) {
 	}
 });
 
-router.put('/account/:id', auth.ensureAuthorized, function(req, res) {
+router.put('/api/account/:id', auth.ensureAuthorized, function(req, res) {
 	users.update(req.params.id, req.body.firstname, req.body.lastname, req.body.biography, function(user, err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
@@ -67,7 +67,7 @@ router.put('/account/:id', auth.ensureAuthorized, function(req, res) {
 	});
 });
 
-router.delete('/account/:id', auth.ensureAuthorized, function(req, res) {
+router.delete('/api/account/:id', auth.ensureAuthorized, function(req, res) {
 	users.remove(req.params.id, function(err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
