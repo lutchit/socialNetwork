@@ -189,7 +189,7 @@ describe('Group route', function() {
             userId: 'testMemberId'
         })
         .end(function(err, res){
-            res.should.have.status(200);
+            res.should.have.status(204);
             done();
         });
     });
@@ -401,7 +401,7 @@ describe('Group route', function() {
         .delete('/groups/testGroupId/members/testMemberId')
         .set('x-access-token', memberToken)
         .end(function(err, res){
-            res.should.have.status(200);
+            res.should.have.status(204);
             done();
         });
     });
@@ -471,7 +471,7 @@ describe('Group route', function() {
         .delete('/groups/testGroupId')
         .set('x-access-token', adminToken)
         .end(function(err, res){
-            res.should.have.status(200);
+            res.should.have.status(204);
             done();
         });
     });

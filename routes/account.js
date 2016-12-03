@@ -37,7 +37,7 @@ router.post('/account/signup', function(req, res) {
 			if(err) {
 				res.status(err.status).send(err.cause);
 			} else {
-                res.status(200).send('User created');
+                res.status(200).json(user);
 			}
 		});
 	}
@@ -62,7 +62,7 @@ router.put('/account/:id', auth.ensureAuthorized, function(req, res) {
 		if(err) {
 			res.status(err.status).send(err.cause);
 		} else {
-			res.status(200).send('User updated');
+			res.status(200).json(user);
 		}
 	});
 });
@@ -72,7 +72,7 @@ router.delete('/account/:id', auth.ensureAuthorized, function(req, res) {
 		if(err) {
 			res.status(err.status).send(err.cause);
 		} else {
-			res.status(200).send('User removed');
+			res.status(204).send();
 		}
 	});
 });

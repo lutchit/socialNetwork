@@ -123,7 +123,7 @@ describe('Account route', function() {
             'email': 'test2@test.fr',
             'password': 'password',
             'firstname': 'test2',
-            'surname': 'test2'
+            'lastname': 'test2'
         })
         .end(function(err, res){
             res.should.have.status(200);
@@ -137,7 +137,7 @@ describe('Account route', function() {
         .send({
             'password': 'password',
             'firstname': 'test2',
-            'surname': 'test2'
+            'lastname': 'test2'
         })
         .end(function(err, res){
             res.should.have.status(401);
@@ -152,7 +152,7 @@ describe('Account route', function() {
             'email': 'test2@test.fr',
             'password': 'password',
             'firstname': 'test2',
-            'surname': 'test2'
+            'lastname': 'test2'
         })
         .end(function(err, res){
             res.should.have.status(409);
@@ -167,7 +167,7 @@ describe('Account route', function() {
         .send({
             'email': 'newMail@test.fr',
             'firstname': 'newName',
-            'surname': 'newSurname',
+            'lastname': 'newLastname',
             'biography': 'new biography'
         })
         .end(function(err, res){
@@ -183,7 +183,7 @@ describe('Account route', function() {
         .send({
             'email': 'newMail@test.fr',
             'firstname': 'newName',
-            'surname': 'newSurname'
+            'lastname': 'newLastname'
         })
         .end(function(err, res){
             res.should.have.status(404);
@@ -196,7 +196,7 @@ describe('Account route', function() {
         .delete('/account/testId')
         .set('x-access-token', token)
         .end(function(err, res){
-            res.should.have.status(200);
+            res.should.have.status(204);
             done();
         });
     });

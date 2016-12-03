@@ -35,7 +35,7 @@ router.delete('/groups/:id', auth.ensureAuthorized, function(req, res) {
 		if(err) {
 			res.status(err.status).send(err.cause);
 		} else {
-			res.status(200).send('Group removed');
+			res.status(204).send();
 		}
 	});
 });
@@ -53,7 +53,7 @@ router.post('/groups/create', auth.ensureAuthorized, function(req, res) {
                         if(err) {
                             res.status(err.status).send(err.cause);
                         } else {
-                            res.status(200).send('Group created');
+                            res.status(200).json(group);
                         }
                     });
                 } else {
@@ -75,7 +75,7 @@ router.put('/groups/join/:groupId', auth.ensureAuthorized, function(req, res) {
                     if(err2) {
                         res.status(err2.status).send(err2.cause);
                     } else {
-                        res.status(200).send('Group joined');
+                        res.status(204).send();
                     }
                 });
             } else {
@@ -90,18 +90,18 @@ router.get('/groups/:id/admin', auth.ensureAuthorized, function(req, res) {
         if(err) {
             res.status(err.status).send(err.cause);
         } else {
-            res.status(200).send(admin);
+            res.status(200).json(admin);
         }
     });
 });
 
 router.put('/groups/:id', auth.ensureAuthorized, function(req, res) {
     var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
-	groups.update(req.params.id, req.body.name, req.body.description, user, function(user, err) {
+	groups.update(req.params.id, req.body.name, req.body.description, user, function(group, err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
 		} else {
-			res.status(200).send('Group updated');
+			res.status(200).json(group);
 		}
 	});
 });
@@ -112,7 +112,7 @@ router.delete('/groups/:groupId/members/:userId', auth.ensureAuthorized, functio
         if(err) {
             res.status(err.status).send(err.cause);
         } else {
-            res.status(200).send('User removed');
+            res.status(204).send();
         }
     });
 });
@@ -147,11 +147,11 @@ router.post('/groups/:groupId/comments/create', auth.ensureAuthorized, function(
                     res.status(err.status).send(err.cause);
             } else {
                 if(exists) {
-                    groups.addComment(req.params.groupId, req.body.message, req.body.authorId, user, function(err){
+                    groups.addComment(req.params.groupId, req.body.message, req.body.authorId, user, function(comment, err){
                         if(err) {
                             res.status(err.status).send(err.cause);
                         } else {
-                            res.status(200).send('Comment created');
+                            res.status(200).json(comment);
                         }
                     });
                 } else {
