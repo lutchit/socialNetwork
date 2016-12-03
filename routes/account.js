@@ -30,10 +30,10 @@ router.get('/account/:id', auth.ensureAuthorized, function(req, res) {
 });
 
 router.post('/account/signup', function(req, res) {
-	if(!req.body.email || !req.body.password || !req.body.firstname || !req.body.surname) {
-		res.status(401).send('Required email/password/firstname/surname');
+	if(!req.body.email || !req.body.password || !req.body.firstname || !req.body.lastname) {
+		res.status(401).send('Required email/password/firstname/lastname');
 	} else {
-		users.signup(req.body.email, req.body.password, req.body.firstname, req.body.surname, req.body.biography, function(user, err){
+		users.signup(req.body.email, req.body.password, req.body.firstname, req.body.lastname, req.body.biography, function(user, err){
 			if(err) {
 				res.status(err.status).send(err.cause);
 			} else {

@@ -4,39 +4,22 @@ webServicesProject.controller('AccountController', function($scope, $http, $rout
     $scope.isUpdating = false;
     $scope.newUser = {};
 
-    if($routeParams.userId === 'me') {
-        $scope.isMe = true;
-        // $scope.user = {
-        //     "_id": "SkwPjJCWe",
-        //     "email": "ludovictichit3@gmail.com",
-        //     "password": "$2a$10$ktzplgcGQAobRt5XqwPkZuHFYrop.8b6LrYqYcnSZG.X.dJ8ZvY9m",
-        //     "firstname": "ludovic",
-        //     "lastname": "tichit",
-        //     "registrationDate": "2016-11-19T00:00:00.000Z",
-        //     "biography": "",
-        //     "__v": 0
-        // };
-    } else {
-        // $scope.otherUser = {
-        //     "_id": "test",
-        //     "email": "corentintichit@gmail.com",
-        //     "firstname": "corentin",
-        //     "lastname": "tichit",
-        //     "registrationDate": "2016-11-25T00:00:00.000Z",
-        //     "biography": "he salut",
-        //     "__v": 0
-        // };
-        $scope.isMe = false;
-        Users.get(function(user) {
-            $scope.otherUser = user;
-        }, function(err) {
-            console.log('Cannot get the user :' + $routeParams.userId);
-        });
+    if($routeParams.userId) {
+        if($routeParams.userId === 'me') {
+            $scope.isMe = true;
+        } else {
+            $scope.isMe = false;
+            Users.get($routeParams.userId, function(user) {
+                $scope.otherUser = user.data;
+            }, function(err) {
+                console.log('Cannot get the user :' + $routeParams.userId);
+            });
+        }
     }
 
     if(Authentification.isAuthenticated()) {
-        Users.account(function(result) {
-            $scope.user = result.data;
+        Users.account(function(res) {
+            $scope.user = res.data;
             $scope.newUser = $scope.user;
             Groups.memberOf($scope.user._id, function(res) {
                 $scope.groups = res.data;

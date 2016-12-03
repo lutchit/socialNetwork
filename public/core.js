@@ -1,5 +1,5 @@
 var webServicesProject = angular.module('webServicesProject', ['ngRoute', 'angularModalService']);
-
+webServicesProject.constant('_', window._);
 webServicesProject.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider   
     .when('/', {
