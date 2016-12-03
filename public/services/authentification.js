@@ -33,8 +33,8 @@ webServicesProject.factory('Authentification', function($q, $http, $window){
     var register = function(user, resolve, reject) {
         $http.post('/account/signup', user).then(function(result) {
             if (result.data) {
-                storeUserCredentials(result.data);
-                resolve();
+                storeUserCredentials(result.data.token);
+                resolve(result.data.user);
             } else {
                 reject(result.data.msg);
             }
@@ -44,8 +44,8 @@ webServicesProject.factory('Authentification', function($q, $http, $window){
     var login = function(user, resolve, reject) {
         $http.post('/account/authenticate', user).then(function(result) {
             if (result.data) {
-                storeUserCredentials(result.data);
-                resolve();
+                storeUserCredentials(result.data.token);
+                resolve(result.data.user);
             } else {
                 reject(result.data);
             }

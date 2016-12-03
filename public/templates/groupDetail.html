@@ -15,7 +15,7 @@
     <div ng-if="!isMemberOf">
         <h3>{{group.name}}</h3>
         <p>{{group.description}}</p>
-        <button class="btn" style="margin-top: 10px;" ng-click="joinGroup()">Join</button>
+        <button class="btn" style="margin-top: 10px;" ng-click="joinGroup({{group._id}})">Join</button>
     </div>
 </div>
 

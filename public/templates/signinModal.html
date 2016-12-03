@@ -5,8 +5,10 @@
 			Signin !
 		</h2>
 		<form>
-			<input type="text" ng-model="newUser.pseudo" placeholder="Pseudo"/>
+			<input type="text" ng-model="newUser.firstname" placeholder="Firstname"/>
+			<input type="text" ng-model="newUser.lastname" placeholder="Lastname"/>
 			<input type="email" ng-model="newUser.email" placeholder="Email"/>
+			<textarea type="text" ng-model="newUser.biography" placeholder="Biography"></textarea>
 		    <input type="password" ng-model="newUser.password" placeholder="Password"/>
 		    <button class="btn" id="signinBtn" ng-click="signin()">Signin</button>
 		</form>

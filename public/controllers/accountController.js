@@ -57,8 +57,8 @@ webServicesProject.controller('AccountController', function($scope, $http, $rout
 
     $scope.showSigninForm = function() {
         ModalService.showModal({
-            templateUrl: "templates/signinModal.html",
-            controller: "modalSigninController"
+            templateUrl: 'templates/signinModal.html',
+            controller: 'modalSigninController'
         }).then(function(modal) {
             modal.close.then(function() {
                 
@@ -68,8 +68,8 @@ webServicesProject.controller('AccountController', function($scope, $http, $rout
 
     $scope.showLoginForm = function() {
         ModalService.showModal({
-            templateUrl: "templates/loginModal.html",
-            controller: "modalLoginController"
+            templateUrl: 'templates/loginModal.html',
+            controller: 'modalLoginController'
         }).then(function(modal) {
             modal.close.then(function() {
                 
@@ -79,8 +79,8 @@ webServicesProject.controller('AccountController', function($scope, $http, $rout
 
     $scope.showLogout = function() {
         ModalService.showModal({
-            templateUrl: "templates/logoutModal.html",
-            controller: "modalLogoutController"
+            templateUrl: 'templates/logoutModal.html',
+            controller: 'modalLogoutController'
         }).then(function(modal) {
             modal.close.then(function() {
 
@@ -97,7 +97,9 @@ webServicesProject.controller('modalSigninController', function($scope, close, U
         email:'',
         password:'',
         password2: '',
-        pseudo: ''
+        firstname: '',
+        lastname: '',
+        biography: ''
     };
 
     $scope.signin = function() {
@@ -105,28 +107,21 @@ webServicesProject.controller('modalSigninController', function($scope, close, U
         var formData = {
             email: $scope.newUser.email,
             password: $scope.newUser.password,
-            pseudo: $scope.newUser.pseudo
+            firstname: $scope.newUser.firstname,
+            lastname: $scope.newUser.lastname,
+            biography: $scope.newUser.biography
         };
 
-        if($scope.newUser.email === '' || $scope.newUser.password === '' || $scope.newUser.pseudo === '') {
-            alert('Email, password and pseudo required !');
-            if($scope.newUser.email === '')
-                
-            if($scope.newUser.password === '')
-
+        if($scope.newUser.email === '' || $scope.newUser.password === '' || $scope.newUser.firstname === '' || $scope.newUser.lastname === '') {
+            alert('Email, password and name required !');
             return;
         }
-        else {
-            Authentification.register(formData, function(res) {
-                if (res.type === false) {
-                    alert(res.data);
-                } else {
-                    window.location = "/profile";
-                }
-            }, function() {
-                window.location = "/";
-            });
-        }
+        Authentification.register(formData, function(res) {
+            window.location = '/profile/me';
+        }, function(err) {
+            alert(err);
+            window.location = '/';
+        });
     };
 });
 
@@ -145,15 +140,11 @@ webServicesProject.controller('modalLoginController', function($scope, close, Us
         };
 
         if($scope.loginForm.email === '' || $scope.loginForm.password === '') {
-            alert('Email and password requireddddd !');
-            if($scope.loginForm.email === '')
-                
-            if($scope.loginForm.password === '')
-
+            alert('Email and password required !');
             return;
         }
         Authentification.login(formData, function() {
-            window.location = "/profile"; 
+            window.location = '/profile'; 
         }, function(errMsg) {
             console.log(errMsg);
         });
@@ -165,7 +156,7 @@ webServicesProject.controller('modalLogoutController', function($scope, close, U
 
     $scope.logout = function() {
         Authentification.logout(function() {
-            window.location = "/";
+            window.location = '/';
         });
     };
 });

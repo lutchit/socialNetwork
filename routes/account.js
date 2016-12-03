@@ -58,7 +58,7 @@ router.post('/account/authenticate', function(req, res) {
 });
 
 router.put('/account/:id', auth.ensureAuthorized, function(req, res) {
-	users.update(req.params.id, req.body.email, req.body.firstname, req.body.surname, req.body.biography, function(user, err) {
+	users.update(req.params.id, req.body.email, req.body.firstname, req.body.lastname, req.body.biography, function(user, err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
 		} else {
