@@ -53,12 +53,12 @@ webServicesProject.factory('Authentification', function($q, $http, $window){
     };  
 
     var remove = function(user, resolve, reject) {
-        $http.delete('/api/account/' + user._id, user).then(function(result) {
+        $http.delete('/api/account/' + user._id).then(function(result) {
             if (result.data) {
+                reject(result.data);
+            } else {
                 destroyUserCredentials();
                 resolve();
-            } else {
-                reject(result.data);
             }
         });
     };
