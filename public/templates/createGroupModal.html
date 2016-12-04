@@ -1,0 +1,13 @@
+<div id="custom-modal">
+	<div class="overlay" id="groupModal">
+		<h2>
+			<strong>Create your group !</strong>
+		</h2>
+		<form>
+			<input type="text" ng-model="newGroup.name" placeholder="Name"/>
+			<textarea type="text" ng-model="newGroup.description" placeholder="Description"></textarea>
+		    <button class="btn" id="signinBtn" ng-click="create()">Create</button>
+		</form>
+	</div>
+	<div id="fade" ng-click="close()"></div>
+</div>

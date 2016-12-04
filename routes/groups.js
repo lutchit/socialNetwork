@@ -19,7 +19,7 @@ router.get('/api/groups/:id', function(req, res) {
     });
 });
 
-router.get('/api/groups', auth.ensureAuthorized, function(req, res) {
+router.get('/api/groups', function(req, res) {
     groups.getAll(function(groups, err) {
         if(err) {
             res.status(err.status).send(err.cause);

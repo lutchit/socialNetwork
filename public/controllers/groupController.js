@@ -8,7 +8,7 @@ webServicesProject.controller('GroupController', function($scope, $http, $routeP
     $scope.interestingGroups = [];
     $scope.newGroup = {};
     $scope.newComment = {};
-    $scope.colors = ['blue', 'green', 'red', 'yellow', 'pink', 'purple'];
+    $scope.colors = ['blue', 'green', 'red', 'yellow', 'pink', 'purple', 'brown', 'orange', 'grey'];
 
     $scope.go = function(path) {
         window.location = path;
@@ -26,6 +26,17 @@ webServicesProject.controller('GroupController', function($scope, $http, $routeP
                 });
             });
         }
+    };
+
+    $scope.showGroupForm = function() {
+        ModalService.showModal({
+            templateUrl: 'templates/createGroupModal.html',
+            controller: 'modalCreateGroupController'
+        }).then(function(modal) {
+            modal.close.then(function() {
+                
+            });
+        });
     };
 
     $scope.addComment = function(groupId) {
@@ -114,4 +125,31 @@ webServicesProject.controller('GroupController', function($scope, $http, $routeP
         });
     }
 
+});
+
+webServicesProject.controller('modalCreateGroupController', function($scope, close, Users, Groups, Authentification) {
+    $scope.close = close;
+
+    $scope.newGroup = {};
+
+    $scope.create = function() {
+
+        if($scope.newGroup.name === '') {
+            alert('Name is required !');
+            return;
+        }
+
+        Users.account(function(res) {
+            var groupToCreate = {
+                idAdmin : res.data._id,
+                name: $scope.newGroup.name,
+                description: $scope.newGroup.description
+            };
+            Groups.create(groupToCreate, function(res) {
+                window.location = '/groups/' + res.data._id;
+            }, function(err) {
+                console.log('Cannot create the group');
+            });
+        });
+    };
 });

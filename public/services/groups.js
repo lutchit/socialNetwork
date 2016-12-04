@@ -13,6 +13,9 @@ webServicesProject.factory('Groups', function($http){
         getAllDetailed: function(success, error) {
             return $http.get('/api/groupsDetailed').then(success, error);
         },
+        create: function(group, success, error) {
+            return $http.post('/api/groups/create', group).then(success, error);
+        },
         join: function(groupId, userId, success, error) {
             return $http.put('/api/groups/join/' + groupId, { userId : userId }).then(success, error);
         },

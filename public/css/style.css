@@ -88,6 +88,12 @@ li:hover {
   height: 160px;
 }
 
+#groupModal {
+  left: 38%;
+  width: 300px;
+  height: 200px;
+}
+
 #fade {
   position: fixed;
   left: 0%;
@@ -104,6 +110,15 @@ li:hover {
 #homeContent {
   text-align: center;
   margin: 40px;
+}
+
+#createBtn {
+  height: 75px;
+  float: right;
+  position: absolute;
+  bottom: 50px;
+  right: 20px;
+  cursor: pointer;
 }
 
 a {
