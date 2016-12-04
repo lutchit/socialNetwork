@@ -19,12 +19,33 @@ router.get('/api/groups/:id', function(req, res) {
     });
 });
 
-router.get('/api/groups', function(req, res) {
+router.get('/api/groups', auth.ensureAuthorized, function(req, res) {
     groups.getAll(function(groups, err) {
         if(err) {
             res.status(err.status).send(err.cause);
         } else {
             res.status(200).json(groups);
+        }
+    });
+});
+
+router.get('/api/groupsDetailed', auth.ensureAuthorized, function(req, res) {
+    var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
+    groups.isMemberOf(req.params.groupId, user._id, function(result, err) {
+        if(err) {
+            res.status(err.status).send(err.cause);
+        } else {
+            if(result) {
+                groups.getAllDetailed(function(groups, err) {
+                    if(err) {
+                        res.status(err.status).send(err.cause);
+                    } else {
+                        res.status(200).json(groups);
+                    }
+                });
+            } else {
+                res.status(403).send('You don\'t have the right to do that');
+            }
         }
     });
 });

@@ -10,6 +10,9 @@ webServicesProject.factory('Groups', function($http){
         getAll: function(success, error) {
             return $http.get('/api/groups').then(success, error);
         },
+        getAllDetailed: function(success, error) {
+            return $http.get('/api/groupsDetailed').then(success, error);
+        },
         join: function(groupId, userId, success, error) {
             return $http.put('/api/groups/join/' + groupId, { userId : userId }).then(success, error);
         },

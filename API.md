@@ -186,7 +186,7 @@ Error Code | Description
 
 - GET /api/groups
 
-The `GET /api/groups` request can be used to retrieve all groups.
+The `GET /api/groups` request can be used to retrieve all groups with a formatted form.
 
 Response Code | Content-type | Content
 ---------- | ------------- | -------------
@@ -194,6 +194,19 @@ Response Code | Content-type | Content
 
 Error Code | Description
 ---------- | -------------
+500 | Server side error.
+
+- GET /api/groups
+
+The `GET /api/groupsDetailed` request can be used to retrieve all groups in details.
+
+Response Code | Content-type | Content
+---------- | ------------- | -------------
+200 | JSON | [Groups]
+
+Error Code | Description
+---------- | -------------
+403 | User identified using the token doesn't have the right to do that.
 500 | Server side error.
 
 - DELETE /api/groups/:id

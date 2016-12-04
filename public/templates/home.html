@@ -2,8 +2,8 @@
 	<h1>Explorer</h1>
 	<div class="explorerGroup">
 		<p class="blck" ng-repeat="group in groups" ng-style="{ 'background-color': group.color }" ng-click="go('/groups/' + group._id)">
-			<span><b>{{group.name}}</b></span>
-			<span><b>{{group.description}}</b></span>
+			<b>{{group.name}}</b>
+			<!--<b>{{group.description}}</b>-->
 		</p>
 	</div>
 </div>
