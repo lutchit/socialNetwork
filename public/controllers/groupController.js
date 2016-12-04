@@ -4,10 +4,7 @@ webServicesProject.controller('GroupController', function($scope, $http, $routeP
     $scope.group = {};
     $scope.groups = [];
     $scope.interestingGroups = [];
-
-    if(Authentification.isAuthenticated()) {
-        
-    }
+    $scope.newComment = {};
 
     $scope.joinGroup = function(groupId) {
         if(Authentification.isAuthenticated()) {
@@ -20,6 +17,16 @@ webServicesProject.controller('GroupController', function($scope, $http, $routeP
                 });
             });
         }
+    };
+
+    $scope.addComment = function(groupId) {
+        Users.account(function(res) {
+            Groups.addComment(groupId, res.data._id, $scope.newComment.message, function(res) {
+                $scope.group.dashboard.push(res.data);
+            }, function(err) {
+                console.log('Cannot add a comment to the group');
+            });
+        });
     };
 
     if($routeParams.groupId) {
