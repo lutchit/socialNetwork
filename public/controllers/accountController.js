@@ -2,6 +2,7 @@ webServicesProject.controller('AccountController', function($scope, $http, $rout
     $scope.auth = Authentification;
     $scope.close = close;
     $scope.isUpdating = false;
+    $scope.user = {};
     $scope.newUser = {};
 
     if($routeParams.userId) {
@@ -11,16 +12,27 @@ webServicesProject.controller('AccountController', function($scope, $http, $rout
             $scope.isMe = false;
             Users.get($routeParams.userId, function(user) {
                 $scope.otherUser = user.data;
+                Groups.memberOf($scope.otherUser._id, function(res) {
+                    $scope.otherUserGroups = res.data;
+                }, function(err) {
+                    console.log('Cannot get the groups an user is a member of');
+                });
             }, function(err) {
                 console.log('Cannot get the user :' + $routeParams.userId);
+                window.location = '/profile/me';
             });
         }
     }
 
     if(Authentification.isAuthenticated()) {
         Users.account(function(res) {
+            if($routeParams.userId) {
+                if($routeParams.userId === res.data._id) {
+                    $scope.isMe = true;
+                }
+            }
             $scope.user = res.data;
-            $scope.newUser = $scope.user;
+            $scope.newUser = res.data;
             Groups.memberOf($scope.user._id, function(res) {
                 $scope.groups = res.data;
             }, function(err) {

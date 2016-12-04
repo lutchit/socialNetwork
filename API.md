@@ -315,7 +315,7 @@ userId | The user id.
 
 Response Code | Content-type | Content
 ---------- | ------------- | -------------
-200 | JSON | Group
+204 |  | 
 
 Error Code | Description
 ---------- | -------------

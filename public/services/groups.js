@@ -15,6 +15,15 @@ webServicesProject.factory('Groups', function($http){
         },
         addComment: function(groupId, authorId, comment, success, error) {
             return $http.post('/api/groups/' + groupId + '/comments/create', { authorId: authorId, message: comment }).then(success, error);
+        },
+        remove: function(groupId, success, error) {
+            return $http.delete('/api/groups/' + groupId).then(success, error);
+        },
+        modify: function(group, success, error) {
+            return $http.put('/api/groups/' + group._id, group).then(success, error);
+        },
+        removeMember: function(groupId, userId, success, error) {
+            return $http.delete('/api/groups/' + groupId + '/members/' + userId).then(success, error);
         }
     };
 

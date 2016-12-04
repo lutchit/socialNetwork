@@ -2,17 +2,15 @@
 	<div ng-if="auth.isAuthenticated()">
 		<div ng-if="isMe">
 			<div>
-				<h3>Your account</h3>
+				<h3>{{user.firstname}} {{user.lastname}}<i style="font-size: 12px; opacity: 0.5;">, member from {{showDate(user.registrationDate, 12)}}</i></h3>
 				<button class="btn" style="margin-top: 10px;" ng-click="startUpdate()" ng-show="!isUpdating">Modify</button>
 				<button class="btn" style="margin-top: 10px;" ng-click="saveUpdate()" ng-show="isUpdating">Save</button>
 				<button class="btn" style="margin-top: 10px;" ng-click="deleteAccount()" ng-show="isUpdating">Delete your account</button>
-				<p ng-show="!isUpdating">Name : {{user.firstname}} {{user.lastname}}</p>
 				<p ng-show="isUpdating">Firstname : <input type="text" ng-model="newUser.firstname"/> Lastname : <input type="text" ng-model="newUser.lastname"/></p>
 				<p>Email : {{user.email}}</p>
 				<p ng-if="user.biography" ng-show="!isUpdating">Biography : {{ user.biography }}</p>
 				<p ng-if="!user.biography" ng-show="!isUpdating">Biography : <i style="opacity: 0.5;">Add your biography</i></p>
 				<p ng-show="isUpdating">Biography : <textarea type="text" ng-model="newUser.biography"></textarea></p>
-				<p>You're a member from {{showDate(user.registrationDate, 12)}}</p>
 			</div>
 			<div>
 				<h3 ng-if="groups.length > 0">Group you joined</h3>
@@ -28,15 +26,14 @@
 
 	<div ng-if="!isMe">
 		<div>
-			<h3>{{otherUser.firstname}} {{otherUser.lastname}}</h3>
-			<p>His email : {{otherUser.email}}</p>
-			<p ng-if="otherUser.biography">His biography : {{ otherUser.biography }}</p>
-			<p>{{otherUser.firstname}} {{otherUser.lastname}} is a member from {{showDate(otherUser.registrationDate, 12)}}</p>
+			<h3>{{otherUser.firstname}} {{otherUser.lastname}}<i style="font-size: 12px; opacity: 0.5;">, member from {{showDate(otherUser.registrationDate, 12)}}</i></h3>
+			<p>Email : {{otherUser.email}}</p>
+			<p ng-if="otherUser.biography">Biography : {{ otherUser.biography }}</p>
 		</div>
 		<div>
 			<h3>Group joined by {{otherUser.firstname}}</h3>
 			<div ng-repeat="group in otherUserGroups">
-				<p><b>{{group.name}}</b></p>
+				<p><b><a ng-href="/groups/{{group._id}}">{{group.name}}</a></b></p>
 				<p>{{group.description}}</p>
 				<p>There are {{group.members.length}} members</p>
 			</div>

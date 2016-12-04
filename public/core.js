@@ -3,7 +3,8 @@ webServicesProject.constant('_', window._);
 webServicesProject.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider   
     .when('/', {
-        templateUrl: 'templates/home.html'       
+        templateUrl: 'templates/home.html',
+        controller: 'GroupController'    
     })  
     .when('/profile/:userId', {
         templateUrl: 'templates/account.html',

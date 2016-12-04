@@ -12,7 +12,7 @@ html, body {
 
 .header nav{
 	box-shadow: 0px 10px 10px 0px #656565;
-	background-color: #C0C0C0;
+  background : linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
 	width:100%;
 }
 .header ul li:last-child {
@@ -26,15 +26,6 @@ html, body {
 
 .right {
   float: right;
-}
-
-#coinsLi {
-  border-right: none;
-}
-
-#coinsLi:hover {
-  border-right: none;
-  background-color: #C0C0C0;
 }
 
 li {
@@ -72,10 +63,11 @@ li:hover {
   color: black;
 }
 
-.overlay form input {
+.overlay form input, .overlay form textarea {
   width: 90%;
   font-size: 16px;
   margin: 2px;
+  resize: none;
 }
 
 #loginModal {
@@ -87,19 +79,13 @@ li:hover {
 #signinModal {
   left: 38.1%;
   width: 300px;
-  height: 200px;
+  height: 280px;
 }
 
 #logoutModal {
   left: 42%;
   width: 200px;
   height: 160px;
-}
-
-#buyItModal {
-  left: 42%;
-  width: 200px;
-  height: 118px;
 }
 
 #fade {
@@ -115,40 +101,72 @@ li:hover {
   z-index: 90;
 }
 
-#fadeGame {
-  position: fixed;
-  left: 0%;
-  top: 0%;
-  background-color: black;
-  -moz-opacity: 0.7;
-  opacity: .70;
-  filter: alpha(opacity=70);
-  width: 100%;
-  height: 100%;
-  z-index: 80;
-}
-
-#fadeGame > div {
-  position: relative;
-  left: 70%;
-  right: 100px;
-  margin-top: 75px;
-  font-family: 'Brush Script MT', cursive;
-  color: white;
-  font-size: 36px;
-  width: 200px;
-}
-
-#fadeGame > img {
-  width: 137px;
-  left: 42%;
-  position: relative;
-  top: -127px;
-}
-
 #homeContent {
   text-align: center;
   margin: 40px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.blck {
+	height:150px;
+	font-size:1rem;
+  line-height: 150px;
+  cursor: pointer;
+}
+
+@media all and (min-width:0px) and (max-width: 349px) {
+	.blck {
+		width: 100%;
+		display: block;
+	}
+}
+@media all and (min-width:350px) and (max-width: 639px) {
+	.blck {
+		width: calc( 50% - 10px );
+		display: inline-block;
+		margin-right: 20px;
+		margin-top:0;
+		margin-bottom:20px;
+	}
+	
+	p:nth-child(even) { 
+		margin-right: 0;
+	}
+}
+
+@media all and (min-width:640px) and (max-width: 1199px) {
+  .blck {
+		width:30%;
+		/*width: calc( 33.33% - 20px );*/
+		display: inline-block;
+		margin-right: 30px;
+		margin-top:0;
+		margin-bottom:30px;
+	}
+	
+	p:nth-child(3n) { 
+		margin-right: 0;
+	}
+	
+}
+@media all and (min-width: 1200px) {
+	.blck {
+		width:22.5%;
+		width: calc( 25% - 30px );
+		display: inline-block;
+		margin-right: 40px;
+		margin-top:0;
+		margin-bottom:40px;
+	}
+	
+	p:nth-child(4n)	{ 
+		margin-right: 0;
+	}
+	
 }
 
 #profileNC {
@@ -161,11 +179,6 @@ li:hover {
   margin: 40px;
 }
 
-#abstract {
-  display: inline-block;
-  padding: 60px 200px 100px 200px;
-}
-
 .btn {
   cursor: pointer;
   border: 1px solid transparent;
@@ -175,20 +188,6 @@ li:hover {
   color: #fff;
   background-color: #337ab7;
   border-color: #2e6da4;
-}
-
-#dwnBtn {
-  font-size: 14px;
-}
-
-#playDemoBtn {
-  font-size: 14px;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
-}
-
-#launchGameBtn {
-  font-size: 30px;
 }
 
 #loginBtn {
@@ -216,308 +215,4 @@ li:hover {
   font-size: 12px;
   background-color: #d9534f;
   border-color: #d43f3a;
-}
-
-#profileLeft {
-  display: inline-block;
-  width: 450px;
-  text-align: center;
-  border: 2px solid black;
-  border-radius: 4px;
-  vertical-align: middle;
-  padding-top: 10px;
-}
-
-.bodyParts {
-  cursor: pointer;
-}
-
-#head {
-  height:60px;
-  width: 60px;
-  margin : 0 auto;
-  line-height: 3.8;
-  border: 1px solid transparent;
-}
-
-#body {
-  height:140px;
-  width: 110px;
-  border: 1px solid black;
-  margin : 0 auto;
-  line-height: 3.8;
-  border: 1px solid transparent;
-}
-
-#rightArm {
-  height:30px;
-  width: 160px;
-  border: 1px solid black;
-  float: right;
-  margin-top: -70px;
-  margin-right: 7.5%;
-  transform: rotate(60deg);
-  border: 1px solid transparent;
-}
-
-#leftArm {
-  height:30px;
-  width: 160px;
-  border: 1px solid black;
-  float: right;
-  margin-top: -70px;
-  margin-right: 56.5%;
-  transform: rotate(-60deg);
-  border: 1px solid transparent;
-}
-
-#rightLeg {
-  height:180px;
-  width: 40px;
-  border: 1px solid black;
-  float: right;
-  margin-top: 0px;
-  margin-right: 40%;
-  border: 1px solid transparent;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-}
-
-#leftLeg {
-  height:180px;
-  width: 40px;
-  border: 1px solid black;
-  float: right;
-  margin-top: -198px;
-  margin-right: 51%;
-  border: 1px solid transparent;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-}
-
-.divItemSelection h4 {
-  border-bottom: 1px solid #e1e8ed;
-  font-size: 14px;
-  margin-top: 4px;
-  margin-bottom: 16px;
-  padding: 0px 10px;
-  font-weight: 300;
-  line-height: 22px;
-}
-
-#itemsBoxAvailable {
-  margin-left: 8px;
-  margin-right: 8px;
-  max-width: 90%;
-  height: 40px;
-  display: inline-block;
-  white-space: nowrap;
-  font-size: 0;
-  overflow: auto;
-  text-align: center;
-}
-
-#itemsBoxAvailable > div {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  margin-right: 20px;
-  text-align: center;
-  cursor: pointer;
-}
-
-#itemsBoxAvailable > div:last-child { 
-  margin-right: 0px;
-}
-
-#headItems {
-  background-color: white;
-  position: absolute;
-  z-index: 50;
-  height: 100px;
-  width: 170px;
-  border: 1px solid black;
-  margin-left: 340px; 
-  margin-top: -55px;
-  border-radius: 10px; 
-}
-
-#bodyItems {
-  background-color: white;
-  position: absolute;
-  z-index: 50;
-  height: 100px;
-  width: 170px;
-  border: 1px solid black;
-  margin-left: 294px; 
-  margin-top: -134px;
-  border-radius: 10px; 
-}
-
-#rightItems {
-  background-color: white;
-  position: absolute;
-  z-index: 50;
-  height: 100px;
-  width: 170px;
-  border: 1px solid black;
-  margin-left: 274px; 
-  margin-top: 40px;
-  border-radius: 10px;
-}
-
-#leftItems {
-  background-color: white;
-  position: absolute;
-  z-index: 50;
-  height: 100px;
-  width: 170px;
-  border: 1px solid black;
-  margin-left: 3px; 
-  margin-top: 40px;
-  border-radius: 10px; 
-}
-
-#profileRight {
-  display: inline-block;
-  width: 40%;
-  margin-left: 100px;
-  vertical-align: top;
-}
-
-#profileRight h2 {
-  border-bottom: 1px solid #e1e8ed;
-  padding: 0px 0px 10px 12px;
-  color: #66757f;
-  font-weight: 300;
-  line-height: 22px;
-}
-
-#profileRight h2 strong {
-  color: black;
-}
-
-#historiesTable {
-  width: 100%;
-  font-size: 14px;
-  border-collapse: collapse;
-}
-
-#historiesTable tr {
-  line-height: 30px;
-  position: relative;
-  border: solid;
-  border-width: 1px 0;
-}
-
-#historiesTable tr:first-child {
-  border-top: none;
-}
-#historiesTable tr:last-child {
-  border-bottom: none;
-}
-
-.coinsProfileDiv {
-  display: inline-block;
-  text-align: center;
-}
-
-#gameContent {
-  width: 100%;
-  text-align: center;
-  padding-top: 100px;
-}
-
-#game {
-  display: inline-block;
-  width: 50%;
-  vertical-align: middle;
-}
-
-#tableGame {
-  border: 3px solid black;
-  border-radius: 5px;
-  margin: 0 auto;
-  background-color: black;
-}
-
-.hideCell{
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-#time {
-  display: inline-block;
-  width: 29%;
-  text-align: center;
-  vertical-align: middle;
-}
-
-#divTime {
-  width: 30%;
-  display: block;
-  border: 3px solid black;
-  border-radius: 5px;
-  padding: 20px;
-  font-size: 30px;
-  margin: 0 auto;
-}
-
-#time > p {
-  display: block;
-  margin-top: 50px;
-}
-
-.block {
-  height:100px;
-  width: 100px;
-  cursor: pointer;
-}
-
-#shopContent {
-  width: 100%;
-}
-
-#shopContent h2 {
-  border-bottom: 1px solid #e1e8ed;
-  font-size: 20px;
-  margin-bottom: 12px;
-  padding: 10px 12px;
-  font-weight: 300;
-  line-height: 22px;
-}
-
-.categoryContent {
-  margin-left: 20px;
-}
-
-.itemsContent {
-  margin-left: 50px;
-  width: 90%;
-  height: 60px;
-  display: block;
-  white-space: nowrap;
-  font-size: 0;
-  overflow: auto;
-  text-align: center;
-}
-
-.itemsContent > div {
-  display: inline-block;
-  width: 100px;
-  height: 50px;
-  margin-right: 100px;
-  font-size: 16px;
-}
-
-.itemsContent > div:last-child { 
-  margin-right: 0px;
-}
-
-.itemsContent > div > div {
-  padding: 20px 0px 20px 0px;
-}
-
-.blockedItem {
-  cursor: pointer;
 }

@@ -1,16 +1,18 @@
-<div ng-if="auth.isAuthenticated()">
-    <h3 ng-if="interestingGroups.length > 0">Interesting groups :</h3>
-    <h3 ng-if="interestingGroups.length === 0">No group to propose to you</h3>
-    <div ng-repeat="group in interestingGroups">
-        <p><a ng-href="/groups/{{group._id}}">{{group.name}}</a></p>
-        <p>{{group.description}}</p>
-        <p>{{group.members.length}} members</p>
-        <button class="btn" style="margin-top: 10px;" ng-click="joinGroup(group._id)">Join</button>
+<div id="profile">    
+    <div ng-if="auth.isAuthenticated()">
+        <h3 ng-if="interestingGroups.length > 0">Interesting groups :</h3>
+        <h3 ng-if="interestingGroups.length === 0">No group to propose to you</h3>
+        <div ng-repeat="group in interestingGroups">
+            <p><a ng-href="/groups/{{group._id}}">{{group.name}}</a></p>
+            <p>{{group.description}}</p>
+            <p>{{group.members.length}} members</p>
+            <button class="btn" style="margin-top: 10px;" ng-click="joinGroup(group._id)">Join</button>
+        </div>
     </div>
-</div>
 
-<div id="profileNC" ng-if="!auth.isAuthenticated()">
-    <h3>Create your own account or login to access to groups !</h3>
-    <p ng-click="showLoginForm()">Login</p>
-    <p ng-click="showSigninForm()">Signin</p>
+    <div id="profileNC" ng-if="!auth.isAuthenticated()">
+        <h3>Create your own account or login to access to groups !</h3>
+        <p ng-click="showLoginForm()">Login</p>
+        <p ng-click="showSigninForm()">Signin</p>
+    </div>
 </div>

@@ -1,28 +1,36 @@
-<div ng-if="auth.isAuthenticated()">    
-    <div ng-if="isMemberOf">
-        <h3>{{group.name}}</h3>
-        <p>{{group.description}}</p>
-        <h4>Dashboard</h4>
-        <div ng-repeat="comment in group.dashboard">
-            {{comment}}
+<div id="profile">
+    <div ng-if="auth.isAuthenticated()">    
+        <div ng-if="isMemberOf">
+            <h3>{{group.name}}</h3>
+            <button class="btn" style="margin-top: 10px;" ng-if="isAdmin" ng-click="startUpdate()" ng-show="!isUpdating">Modify</button>
+            <button class="btn" style="margin-top: 10px;" ng-if="isAdmin" ng-click="saveUpdate()" ng-show="isUpdating">Save</button>
+            <button class="btn" style="margin-top: 10px;" ng-if="isAdmin" ng-click="deleteGroup()" ng-show="isUpdating">Delete the group</button>
+            <button class="btn" style="margin-top: 10px;" ng-if="!isAdmin" ng-click="quitGroup()">Quit the group</button>
+            <p>{{group.description}}</p>
+            <p ng-show="isUpdating"><textarea type="text" ng-model="newGroup.description"></textarea></p>
+            <h4>Dashboard</h4>
+            <div ng-repeat="comment in group.dashboard">
+                {{comment}}
+            </div>
+            <textarea type="text" ng-model="newComment.message"></textarea>
+            <button class="btn" style="margin-top: 10px;" ng-click="addComment(group._id)">Add comment</button>
+            <h4>Members</h4>
+            <div ng-repeat="member in group.members">
+                <p><a ng-href="/profile/{{member._id}}">{{member.firstname}} {{member.lastname}}</a></p>
+                <button class="btn" style="margin-top: 10px;" ng-if="isAdmin" ng-click="deleteMember(member._id)">Remove this member</button>
+            </div>
         </div>
-        <textarea type="text" ng-model="newComment.message"></textarea>
-        <button class="btn" style="margin-top: 10px;" ng-click="addComment(group._id)">Add comment</button>
-        <h4>Members</h4>
-        <div ng-repeat="member in group.members">
-            {{member}}
+
+        <div ng-if="!isMemberOf">
+            <h3>{{group.name}}</h3>
+            <p>{{group.description}}</p>
+            <button class="btn" style="margin-top: 10px;" ng-click="joinGroup(group._id)">Join</button>
         </div>
     </div>
 
-    <div ng-if="!isMemberOf">
-        <h3>{{group.name}}</h3>
-        <p>{{group.description}}</p>
-        <button class="btn" style="margin-top: 10px;" ng-click="joinGroup(group._id)">Join</button>
+    <div id="profileNC" ng-if="!auth.isAuthenticated()">
+        <h3>Create your own account to access your profile or login !</h3>
+        <p ng-click="showLoginForm()">Login</p>
+        <p ng-click="showSigninForm()">Signin</p>
     </div>
-</div>
-
-<div id="profileNC" ng-if="!auth.isAuthenticated()">
-    <h3>Create your own account to access your profile or login !</h3>
-    <p ng-click="showLoginForm()">Login</p>
-    <p ng-click="showSigninForm()">Signin</p>
 </div>
