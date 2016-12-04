@@ -10,9 +10,14 @@
             <p ng-show="isUpdating"><textarea type="text" ng-model="newGroup.description"></textarea></p>
             <h4>Dashboard</h4>
             <div ng-repeat="comment in group.dashboard">
-                {{comment}}
+                <div id="urlsList">
+                    <div class="oneLine">
+                        <div class="leftList">{{comment.message}}</div>
+                        <div class="rightList">{{showDate(comment.date, 12)}}</div>
+                    </div>
+                </div>
             </div>
-            <textarea type="text" ng-model="newComment.message"></textarea>
+            <textarea id="commentArea" type="text" ng-model="newComment.message"></textarea>
             <button class="btn" style="margin-top: 10px;" ng-click="addComment(group._id)">Add comment</button>
             <h4>Members</h4>
             <div ng-repeat="member in group.members">

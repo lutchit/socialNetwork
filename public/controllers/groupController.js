@@ -88,6 +88,10 @@ webServicesProject.controller('GroupController', function($scope, $http, $routeP
         });
     };
 
+    $scope.showDate = function(date, numberToRemove) {
+        return new Date(date).toUTCString().slice(0, new Date(date).toUTCString().length - numberToRemove);
+    };
+
     if($routeParams.groupId) {
         Groups.get($routeParams.groupId, function(res) {
             $scope.group = res.data;

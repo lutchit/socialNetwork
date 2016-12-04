@@ -230,3 +230,46 @@ a {
   background-color: #d9534f;
   border-color: #d43f3a;
 }
+
+#commentArea {
+  resize: none;
+  margin-top: 30px;
+  width: 350px;
+  height: 60px;
+}
+
+#urlsList {
+  width: 70%;
+  height: 70%;
+  overflow: auto;
+}
+
+.oneLine {
+  display: inline-block;
+  width: 100%;
+  padding-top: 20px;
+  position: relative;
+}
+
+.oneLine:before {
+  content: "";
+  position: absolute;
+  left: 35%;
+  width: 56%;
+  border-top: 3px solid;
+  top: 0;
+}
+
+.leftList {
+  overflow: auto;
+  white-space: nowrap;
+  display: inline-block;
+  width: 74%;
+}
+ 
+.rightList {
+  text-align: left;
+  overflow: hidden;
+  display: inline-block;
+  width: 25%;
+}
