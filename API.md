@@ -206,7 +206,6 @@ Response Code | Content-type | Content
 
 Error Code | Description
 ---------- | -------------
-403 | User identified using the token doesn't have the right to do that.
 500 | Server side error.
 
 - DELETE /api/groups/:id

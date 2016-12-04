@@ -111,10 +111,14 @@ webServicesProject.controller('GroupController', function($scope, $http, $routeP
             });
             if(Authentification.isAuthenticated()) {
                 Users.account(function(user) {
-                    Groups.memberOf(user.data._id, function(res) {
-                        $scope.interestingGroups = _.differenceWith(groups.data, res.data, _.isEqual);
+                    Groups.getAllDetailed(function(detailedGroups) {
+                        Groups.memberOf(user.data._id, function(res) {
+                            $scope.interestingGroups = _.differenceWith(detailedGroups.data, res.data, _.isEqual);
+                        }, function(err) {
+                            console.log('Cannot get the groups an user is a member of');
+                        });
                     }, function(err) {
-                        console.log('Cannot get the groups an user is a member of');
+                        console.log('Cannot get the detailed groups');
                     });
                 }, function(error) {
                     console.log('Cannot get the user account');
