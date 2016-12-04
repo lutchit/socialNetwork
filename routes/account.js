@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 var auth = require('../tools/authentification');
 
 var users = require ('../config').users;
+var groups = require ('../config').groups;
 
 router.get('/api/account/me', auth.ensureAuthorized, function(req, res) {
 	var user = _.get(jwt.decode(req.token, {complete: true}), 'payload._doc');
@@ -68,11 +69,36 @@ router.put('/api/account/:id', auth.ensureAuthorized, function(req, res) {
 });
 
 router.delete('/api/account/:id', auth.ensureAuthorized, function(req, res) {
-	users.remove(req.params.id, function(err) {
+	users.remove(req.params.id, function(user, err) {
 		if(err) {
 			res.status(err.status).send(err.cause);
 		} else {
-			res.status(204).send();
+			groups.findGroupByMember(user._id, function(retrievedGroups, err) {
+				if(err) {
+					res.status(err.status).send(err.cause);
+				} else {
+					if(retrievedGroups.length > 0) {
+						_.each(retrievedGroups, function(group) {
+							if(group.admin === user._id) {
+								groups.remove(group._id, { _id: user._id }, function(err) {
+									if(err) {
+										res.status(err.status).send(err.cause);
+									}
+								});
+							} else {
+								groups.removeMember(user._id, group._id, { _id: user._id }, function(err) {
+									if(err) {
+										res.status(err.status).send(err.cause);
+									}
+								});
+							}
+						});
+						res.status(204).send();
+					} else {
+						res.status(204).send();
+					}
+				}
+			});
 		}
 	});
 });
